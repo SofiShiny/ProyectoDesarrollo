@@ -1,0 +1,17 @@
+namespace Eventos.Aplicacion.DTOs;
+
+public class EventoDto
+{
+    public Guid Id { get; set; }
+    public string? Titulo { get; set; }
+    public string? Descripcion { get; set; }
+    public LocationDto? Ubicacion { get; set; }
+    public DateTime FechaInicio { get; set; }
+    public DateTime FechaFin { get; set; }
+    public int MaximoAsistentes { get; set; }
+    public int ConteoAsistentesActual { get; set; }
+    public string? Estado { get; set; }
+    public string? OrganizadorId { get; set; }
+    public DateTime CreadoEn { get; set; }
+    public IEnumerable<AsistenteDto>? Asistentes { get; set; }
+}
