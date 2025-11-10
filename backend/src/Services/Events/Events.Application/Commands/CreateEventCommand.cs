@@ -1,15 +1,15 @@
-using BuildingBlocks.Application.Common;
-using BuildingBlocks.Application.Commands;
+using Bloques.Aplicacion.Comun;
+using Bloques.Aplicacion.Comandos;
 using Eventos.Aplicacion.DTOs;
 
 namespace Eventos.Aplicacion.Comandos;
 
-public record CrearEventoCommand(
+public record CrearEventoComando(
     string Titulo,
     string Descripcion,
-    LocationDto Ubicacion,
+    UbicacionDto Ubicacion,
     DateTime FechaInicio,
     DateTime FechaFin,
     int MaximoAsistentes,
     string OrganizadorId
-) : ICommand<Result<EventoDto>>;
+) : IComando<Resultado<EventoDto>>;

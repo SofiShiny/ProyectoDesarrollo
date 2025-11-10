@@ -1,140 +1,141 @@
-﻿using Events.Application.Commands;
-using Events.Application.DTOs;
-using Events.Domain.Entities;
-using Events.Domain.Repositories;
-using Events.Domain.ValueObjects;
+﻿using Eventos.Aplicacion.Comandos;
+using Eventos.Aplicacion.DTOs;
+using Eventos.Dominio.Entidades;
+using Eventos.Dominio.Repositorios;
+using Eventos.Dominio.ObjetosDeValor;
 using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace Events.Tests.Application.Commands;
+namespace Eventos.Tests.Application.Comandos;
 
-public class CreateEventCommandHandlerTests
+public class CrearEventoComandoHandlerTests
 {
-    private readonly Mock<IEventRepository> _eventRepositoryMock;
-    private readonly CreateEventCommandHandler _handler;
+    private readonly Mock<IRepositorioEvento> _repositorioEventoMock;
+    private readonly CrearEventoComandoHandler _handler;
 
-    public CreateEventCommandHandlerTests()
+    public CrearEventoComandoHandlerTests()
     {
-        _eventRepositoryMock = new Mock<IEventRepository>();
-        _handler = new CreateEventCommandHandler(_eventRepositoryMock.Object);
+        _repositorioEventoMock = new Mock<IRepositorioEvento>();
+        _handler = new CrearEventoComandoHandler(_repositorioEventoMock.Object);
     }
 
     [Fact]
-    public async Task Handle_WithValidCommand_ShouldCreateEventAndReturnSuccess()
+    public async Task Handle_WithValidComando_ShouldCreateEventAndReturnSuccess()
     {
         // Arrange
-        var locationDto = new LocationDto
+        var ubicacionDto = new UbicacionDto
         {
-            VenueName = "Main Hall",
-            Address = "123 St",
-            City = "NY",
-            State = "NY",
-            ZipCode = "10001",
-            Country = "USA"
-        }!; // ✅ operador de supresión aplicado al objeto completo
+            NombreLugar = "Main Hall",
+            Direccion = "123 St",
+            Ciudad = "NY",
+            Region = "NY",
+            CodigoPostal = "10001",
+            Pais = "USA"
+        }!;
 
-        var command = new CreateEventCommand(
-            Title: "TechConf",
-            Description: "Tech conference",
-            Location: locationDto,
-            StartDate: DateTime.UtcNow.AddDays(5),
-            EndDate: DateTime.UtcNow.AddDays(6),
-            MaxAttendees: 100,
-            OrganizerId: "org-001"
+        var comando = new CrearEventoComando(
+            "TechConf",
+            "Tech conference",
+            ubicacionDto,
+            DateTime.UtcNow.AddDays(5),
+            DateTime.UtcNow.AddDays(6),
+            100,
+            "org-001"
         );
 
-        var expectedEvent = new Event(
-            command.Title,
-            command.Description,
-            new Location(
-                locationDto.VenueName,
-                locationDto.Address,
-                locationDto.City,
-                locationDto.State,
-                locationDto.ZipCode,
-                locationDto.Country
+        var expectedEvento = new Evento(
+            comando.Titulo,
+            comando.Descripcion,
+            new Ubicacion(
+                ubicacionDto.NombreLugar,
+                ubicacionDto.Direccion,
+                ubicacionDto.Ciudad,
+                ubicacionDto.Region,
+                ubicacionDto.CodigoPostal,
+                ubicacionDto.Pais
             ),
-            command.StartDate,
-            command.EndDate,
-            command.MaxAttendees,
-            command.OrganizerId
+            comando.FechaInicio,
+            comando.FechaFin,
+            comando.MaximoAsistentes,
+            comando.OrganizadorId
         );
 
-        _eventRepositoryMock
-            .Setup(x => x.AddAsync(It.IsAny<Event>(), It.IsAny<CancellationToken>()))
-            .Returns(Task.FromResult(expectedEvent));
+        // El repositorio agrega el evento y no devuelve valor
+        _repositorioEventoMock
+            .Setup(x => x.AgregarAsync(It.IsAny<Evento>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
 
         // Act
-        var result = await _handler.Handle(command, CancellationToken.None);
+        var result = await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBeNull();
-        result.Value.Title.Should().Be(command.Title);
-        result.Value.Description.Should().Be(command.Description);
-        result.Value.Location.Should().NotBeNull();
-        result.Value.Location.City.Should().Be("NY");
+        result.Value.Titulo.Should().Be(comando.Titulo);
+        result.Value.Descripcion.Should().Be(comando.Descripcion);
+        result.Value.Ubicacion.Should().NotBeNull();
+        result.Value.Ubicacion.Ciudad.Should().Be("NY");
 
-        _eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Event>(), It.IsAny<CancellationToken>()), Times.Once);
+        _repositorioEventoMock.Verify(x => x.AgregarAsync(It.IsAny<Evento>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
     public async Task Handle_WithNullLocation_ShouldReturnFailure()
     {
         // Arrange
-        var command = new CreateEventCommand(
-            Title: "TechConf",
-            Description: "Tech conference",
-            Location: null!,
-            StartDate: DateTime.UtcNow.AddDays(5),
-            EndDate: DateTime.UtcNow.AddDays(6),
-            MaxAttendees: 100,
-            OrganizerId: "org-001"
+        var comando = new CrearEventoComando(
+            "TechConf",
+            "Tech conference",
+            null!,
+            DateTime.UtcNow.AddDays(5),
+            DateTime.UtcNow.AddDays(6),
+            100,
+            "org-001"
         );
 
         // Act
-        var result = await _handler.Handle(command, CancellationToken.None);
+        var result = await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Error.Should().Be("Location is required");
-        _eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Event>(), It.IsAny<CancellationToken>()), Times.Never);
+        result.Error.Should().Be("La ubicación es obligatoria");
+        _repositorioEventoMock.Verify(x => x.AgregarAsync(It.IsAny<Evento>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
     public async Task Handle_WhenRepositoryThrowsArgumentException_ShouldReturnFailure()
     {
         // Arrange
-        var locationDto = new LocationDto
+        var ubicacionDto = new UbicacionDto
         {
-            VenueName = "Main Hall",
-            Address = "123 St",
-            City = "NY",
-            State = "NY",
-            ZipCode = "10001",
-            Country = "USA"
-        }!; // ✅ operador de supresión aplicado al objeto completo
+            NombreLugar = "Main Hall",
+            Direccion = "123 St",
+            Ciudad = "NY",
+            Region = "NY",
+            CodigoPostal = "10001",
+            Pais = "USA"
+        }!;
 
-        var command = new CreateEventCommand(
-            Title: "TechConf",
-            Description: "Tech conference",
-            Location: locationDto,
-            StartDate: DateTime.UtcNow.AddDays(5),
-            EndDate: DateTime.UtcNow.AddDays(6),
-            MaxAttendees: 100,
-            OrganizerId: "org-001"
+        var comando = new CrearEventoComando(
+            "TechConf",
+            "Tech conference",
+            ubicacionDto,
+            DateTime.UtcNow.AddDays(5),
+            DateTime.UtcNow.AddDays(6),
+            100,
+            "org-001"
         );
 
-        _eventRepositoryMock
-            .Setup(x => x.AddAsync(It.IsAny<Event>(), It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new ArgumentException("Start date must be in the future (Parameter 'startDate')"));
+        _repositorioEventoMock
+            .Setup(x => x.AgregarAsync(It.IsAny<Evento>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new ArgumentException("La fecha de inicio debe ser en el futuro"));
 
         // Act
-        var result = await _handler.Handle(command, CancellationToken.None);
+        var result = await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Error.Should().Be("Start date must be in the future (Parameter 'startDate')");
+        result.Error.Should().Be("La fecha de inicio debe ser en el futuro");
     }
 }

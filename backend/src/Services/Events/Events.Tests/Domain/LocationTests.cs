@@ -12,22 +12,22 @@ public class LocationTests
         // Arrange
         var venueName = "Convention Center";
         var address = "123 Main St";
-        var city = "New York";
+        var ciudad = "New York";
         var state = "NY";
-        var postalCode = "10001";
-        var country = "USA";
+        var codigoPostal = "10001";
+        var pais = "USA";
 
         // Act
-        var location = new Location(venueName, address, city, state, postalCode, country);
+        var direccion = new Location(venueName, address, ciudad, state, codigoPostal, pais);
 
         // Assert
-        location.Should().NotBeNull();
-        location.VenueName.Should().Be(venueName);
-        location.Address.Should().Be(address);
-        location.City.Should().Be(city);
-        location.State.Should().Be(state);
-        location.PostalCode.Should().Be(postalCode);
-        location.Country.Should().Be(country);
+        direccion.Should().NotBeNull();
+        direccion.VenueName.Should().Be(venueName);
+        direccion.Direccion.Should().Be(address);
+        direccion.Ciudad.Should().Be(ciudad);
+        direccion.State.Should().Be(state);
+        direccion.CodigoPostal.Should().Be(codigoPostal);
+        direccion.Pais.Should().Be(pais);
     }
 
     [Theory]
@@ -37,7 +37,7 @@ public class LocationTests
     public void CreateLocation_WithInvalidVenueName_ShouldThrowException(string venueName)
     {
         // Act
-        Action act = () => new Location(venueName, "Address", "City", "State", "12345", "Country");
+        Action act = () => new Location(venueName, "Direccion", "Ciudad", "State", "12345", "Pais");
 
         // Assert
         act.Should().Throw<ArgumentException>()
@@ -48,14 +48,14 @@ public class LocationTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public void CreateLocation_WithInvalidCity_ShouldThrowException(string city)
+    public void CreateLocation_WithInvalidCity_ShouldThrowException(string ciudad)
     {
         // Act
-        Action act = () => new Location("Venue", "Address", city, "State", "12345", "Country");
+        Action act = () => new Location("Venue", "Direccion", ciudad, "State", "12345", "Pais");
 
         // Assert
         act.Should().Throw<ArgumentException>()
-            .WithMessage("*City*");
+            .WithMessage("*Ciudad*");
     }
 
     [Fact]

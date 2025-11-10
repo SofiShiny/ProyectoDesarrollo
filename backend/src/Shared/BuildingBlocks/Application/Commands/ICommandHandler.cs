@@ -1,13 +1,13 @@
 using MediatR;
 
-namespace BuildingBlocks.Application.Commands;
+namespace Bloques.Aplicacion.Comandos;
 
-public interface ICommandHandler<in TCommand> : IRequestHandler<TCommand>
-    where TCommand : ICommand
+public interface IComandoHandler<in TComando> : IRequestHandler<TComando>
+ where TComando : IComando
 {
 }
 
-public interface ICommandHandler<in TCommand, TResult> : IRequestHandler<TCommand, TResult>
-    where TCommand : ICommand<TResult>
+public interface IComandoHandler<in TComando, TResult> : IRequestHandler<TComando, TResult>
+ where TComando : IComando<TResult>
 {
 }

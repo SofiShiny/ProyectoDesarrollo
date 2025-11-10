@@ -1,9 +1,9 @@
 using System;
 
-namespace BuildingBlocks.Domain;
+namespace Bloques.Dominio;
 
-public abstract class DomainEvent
+public abstract class EventoDominio
 {
-    public Guid AggregateId { get; protected set; }
-    public DateTime OccurredAt { get; protected set; } = DateTime.UtcNow;
+    public Guid IdAgregado { get; protected set; }
+    public DateTime OcurrioEn { get; protected set; } = DateTime.UtcNow;
 }

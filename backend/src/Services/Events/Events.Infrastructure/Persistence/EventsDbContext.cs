@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Eventos.Dominio.Entidades;
-using Events.Infrastructure.Persistence.Configurations;
-using BuildingBlocks.Domain;
+using Eventos.Infraestructura.Persistence.Configurations;
+using Bloques.Dominio;
 
-namespace Events.Infrastructure.Persistence;
+namespace Eventos.Infraestructura.Persistence;
 
 public class EventsDbContext : DbContext
 {
@@ -18,7 +18,7 @@ public class EventsDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Ignore<DomainEvent>();
+        modelBuilder.Ignore<EventoDominio>();
 
         modelBuilder.ApplyConfiguration(new EventConfiguration());
         modelBuilder.ApplyConfiguration(new AttendeeConfiguration());

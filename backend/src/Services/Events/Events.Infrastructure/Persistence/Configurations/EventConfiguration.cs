@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Eventos.Dominio.Entidades;
 using Eventos.Dominio.Enumeraciones;
 
-namespace Events.Infrastructure.Persistence.Configurations;
+namespace Eventos.Infraestructura.Persistence.Configurations;
 
 public class EventConfiguration : IEntityTypeConfiguration<Evento>
 {
@@ -19,14 +19,14 @@ public class EventConfiguration : IEntityTypeConfiguration<Evento>
             .IsRequired()
             .HasMaxLength(2000);
 
-        builder.OwnsOne(e => e.Ubicacion, location =>
+        builder.OwnsOne(e => e.Ubicacion, direccion =>
         {
-            location.Property(l => l.NombreLugar).HasMaxLength(200).IsRequired();
-            location.Property(l => l.Direccion).HasMaxLength(300).IsRequired();
-            location.Property(l => l.Ciudad).HasMaxLength(100).IsRequired();
-            location.Property(l => l.Region).HasMaxLength(100);
-            location.Property(l => l.CodigoPostal).HasMaxLength(20);
-            location.Property(l => l.Pais).HasMaxLength(100).IsRequired();
+            direccion.Property(l => l.NombreLugar).HasMaxLength(200).IsRequired();
+            direccion.Property(l => l.Direccion).HasMaxLength(300).IsRequired();
+            direccion.Property(l => l.Ciudad).HasMaxLength(100).IsRequired();
+            direccion.Property(l => l.Region).HasMaxLength(100);
+            direccion.Property(l => l.CodigoPostal).HasMaxLength(20);
+            direccion.Property(l => l.Pais).HasMaxLength(100).IsRequired();
         });
 
         builder.Property(e => e.FechaInicio).IsRequired();
@@ -41,7 +41,7 @@ public class EventConfiguration : IEntityTypeConfiguration<Evento>
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Ignore(e => e.DomainEvents);
+        builder.Ignore(e => e.EventosDominio);
 
         builder.HasMany(e => e.Asistentes)
             .WithOne()

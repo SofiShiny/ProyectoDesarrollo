@@ -14,21 +14,21 @@ public class Result
 
     public static Result Success() => new Result(true, string.Empty);
     public static Result Failure(string error) => new Result(false, error);
-    
-    public static Result<T> Success<T>(T value) => new Result<T>(value, true, string.Empty);
-    public static Result<T> Failure<T>(string error) => new Result<T>(default!, false, error);
+
+    public static Result<T> Success<T>(T value) => Result<T>.Success(value);
+    public static Result<T> Failure<T>(string error) => Result<T>.Failure(error);
 }
 
 public class Result<T> : Result
 {
     public T Value { get; }
 
-    protected internal Result(T value, bool isSuccess, string error) 
+    protected internal Result(T value, bool isSuccess, string error)
         : base(isSuccess, error)
     {
         Value = value;
     }
-    
+
     public static new Result<T> Success(T value) => new Result<T>(value, true, string.Empty);
     public static new Result<T> Failure(string error) => new Result<T>(default!, false, error);
 }

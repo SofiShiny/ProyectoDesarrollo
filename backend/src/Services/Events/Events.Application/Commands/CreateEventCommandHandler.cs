@@ -1,5 +1,4 @@
-using BuildingBlocks.Application;
-using BuildingBlocks.Application.Common;
+using Bloques.Aplicacion.Comun;
 using Eventos.Dominio.Entidades;
 using Eventos.Dominio.Repositorios;
 using Eventos.Dominio.ObjetosDeValor;
@@ -8,22 +7,22 @@ using MediatR;
 
 namespace Eventos.Aplicacion.Comandos;
 
-public class CrearEventoCommandHandler : IRequestHandler<CrearEventoCommand, Result<EventoDto>>
+public class CrearEventoComandoHandler : IRequestHandler<CrearEventoComando, Resultado<EventoDto>>
 {
     private readonly IRepositorioEvento _repositorioEvento;
 
-    public CrearEventoCommandHandler(IRepositorioEvento repositorioEvento)
+    public CrearEventoComandoHandler(IRepositorioEvento repositorioEvento)
     {
         _repositorioEvento = repositorioEvento;
     }
 
-    public async Task<Result<EventoDto>> Handle(CrearEventoCommand request, CancellationToken cancellationToken)
+    public async Task<Resultado<EventoDto>> Handle(CrearEventoComando request, CancellationToken cancellationToken)
     {
         try
         {
             if (request.Ubicacion == null)
             {
-                return Result<EventoDto>.Failure("La ubicación es obligatoria");
+                return Resultado<EventoDto>.Falla("La ubicación es obligatoria");
             }
 
             var ubicacion = new Ubicacion(
@@ -48,11 +47,11 @@ public class CrearEventoCommandHandler : IRequestHandler<CrearEventoCommand, Res
             await _repositorioEvento.AgregarAsync(evento, cancellationToken);
 
             var dto = MapToDto(evento);
-            return Result<EventoDto>.Success(dto);
+            return Resultado<EventoDto>.Exito(dto);
         }
         catch (ArgumentException ex)
         {
-            return Result<EventoDto>.Failure(ex.Message);
+            return Resultado<EventoDto>.Falla(ex.Message);
         }
     }
 
@@ -63,15 +62,15 @@ public class CrearEventoCommandHandler : IRequestHandler<CrearEventoCommand, Res
             Id = evento.Id,
             Titulo = evento.Titulo,
             Descripcion = evento.Descripcion,
-            Ubicacion = new LocationDto
+            Ubicacion = new UbicacionDto
             {
-                VenueName = evento.Ubicacion?.NombreLugar ?? string.Empty,
-                Venue = evento.Ubicacion?.NombreLugar ?? string.Empty,
-                Address = evento.Ubicacion?.Direccion ?? string.Empty,
-                City = evento.Ubicacion?.Ciudad ?? string.Empty,
-                State = evento.Ubicacion?.Region ?? string.Empty,
-                ZipCode = evento.Ubicacion?.CodigoPostal ?? string.Empty,
-                Country = evento.Ubicacion?.Pais ?? string.Empty
+                NombreLugar = evento.Ubicacion?.NombreLugar ?? string.Empty,
+                Lugar = evento.Ubicacion?.NombreLugar ?? string.Empty,
+                Direccion = evento.Ubicacion?.Direccion ?? string.Empty,
+                Ciudad = evento.Ubicacion?.Ciudad ?? string.Empty,
+                Region = evento.Ubicacion?.Region ?? string.Empty,
+                CodigoPostal = evento.Ubicacion?.CodigoPostal ?? string.Empty,
+                Pais = evento.Ubicacion?.Pais ?? string.Empty
             },
             FechaInicio = evento.FechaInicio,
             FechaFin = evento.FechaFin,
@@ -79,7 +78,7 @@ public class CrearEventoCommandHandler : IRequestHandler<CrearEventoCommand, Res
             ConteoAsistentesActual = evento.ConteoAsistentesActual,
             Estado = evento.Estado.ToString(),
             OrganizadorId = evento.OrganizadorId,
-            CreadoEn = evento.CreatedAt
+            CreadoEn = evento.CreadoEn
         };
     }
 }

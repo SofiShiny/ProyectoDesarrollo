@@ -1,4 +1,4 @@
-/*using Events.Application.Commands;
+/*using Events.Application.Comandos;
 using Events.Domain.Entities;
 using Events.Domain.Enums;
 using Events.Domain.Repositories;
@@ -7,17 +7,17 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace Events.Tests.Application.Commands;
+namespace Events.Tests.Application.Comandos;
 
-public class PublishEventCommandHandlerTests
+public class PublishEventComandoHandlerTests
 {
     private readonly Mock<IEventRepository> _eventRepositoryMock;
-    private readonly PublishEventCommandHandler _handler;
+    private readonly PublishEventComandoHandler _handler;
 
-    public PublishEventCommandHandlerTests()
+    public PublishEventComandoHandlerTests()
     {
         _eventRepositoryMock = new Mock<IEventRepository>();
-        _handler = new PublishEventCommandHandler(_eventRepositoryMock.Object);
+        _handler = new PublishEventComandoHandler(_eventRepositoryMock.Object);
     }
 
     [Fact]
@@ -25,12 +25,12 @@ public class PublishEventCommandHandlerTests
     {
         // Arrange
         var eventId = Guid.NewGuid();
-        var command = new PublishEventCommand(eventId);
+        var comando = new PublishEventComando(eventId);
         
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "CA", "12345", "USA");
-        var eventEntity = new Event("Tech Conference", "Description", location, startDate, endDate, 500, "organizer-001");
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "CA", "12345", "USA");
+        var eventEntity = new Event("Tech Conference", "Description", direccion, startDate, endDate, 500, "organizer-001");
         typeof(Event).GetProperty("Id")!.SetValue(eventEntity, eventId);
 
         _eventRepositoryMock
@@ -42,12 +42,12 @@ public class PublishEventCommandHandlerTests
             .Returns(Task.CompletedTask);
 
         // Act
-        await _handler.Handle(command, CancellationToken.None);
+        await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
-        eventEntity.Status.Should().Be(EventStatus.Published);
+        eventEntity.Status.Should().Be(EventStatus.Publicado);
         _eventRepositoryMock.Verify(
-            x => x.UpdateAsync(It.Is<Event>(e => e.Status == EventStatus.Published), It.IsAny<CancellationToken>()), 
+            x => x.UpdateAsync(It.Is<Event>(e => e.Status == EventStatus.Publicado), It.IsAny<CancellationToken>()), 
             Times.Once);
     }
 
@@ -56,14 +56,14 @@ public class PublishEventCommandHandlerTests
     {
         // Arrange
         var eventId = Guid.NewGuid();
-        var command = new PublishEventCommand(eventId);
+        var comando = new PublishEventComando(eventId);
 
         _eventRepositoryMock
             .Setup(x => x.GetByIdAsync(eventId, It.IsAny<CancellationToken>()))
             .ReturnsAsync((Event?)null);
 
         // Act
-        Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
+        Func<Task> act = async () => await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         await act.Should().ThrowAsync<InvalidOperationException>()

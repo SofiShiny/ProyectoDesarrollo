@@ -13,16 +13,16 @@ public class LocationDtoTests
         var dto = new LocationDto
         {
             VenueName = "Conference Center",
-            Address = "123 Main Street",
-            City = "San Francisco",
+            Direccion = "123 Main Street",
+            Ciudad = "San Francisco",
             State = "CA",
             ZipCode = "94105"
         };
 
         // Assert
         dto.VenueName.Should().Be("Conference Center");
-        dto.Address.Should().Be("123 Main Street");
-        dto.City.Should().Be("San Francisco");
+        dto.Direccion.Should().Be("123 Main Street");
+        dto.Ciudad.Should().Be("San Francisco");
         dto.State.Should().Be("CA");
         dto.ZipCode.Should().Be("94105");
     }
@@ -34,16 +34,16 @@ public class LocationDtoTests
         var dto = new LocationDto
         {
             VenueName = string.Empty,
-            Address = string.Empty,
-            City = string.Empty,
+            Direccion = string.Empty,
+            Ciudad = string.Empty,
             State = string.Empty,
             ZipCode = string.Empty
         };
 
         // Assert
         dto.VenueName.Should().BeEmpty();
-        dto.Address.Should().BeEmpty();
-        dto.City.Should().BeEmpty();
+        dto.Direccion.Should().BeEmpty();
+        dto.Ciudad.Should().BeEmpty();
         dto.State.Should().BeEmpty();
         dto.ZipCode.Should().BeEmpty();
     }

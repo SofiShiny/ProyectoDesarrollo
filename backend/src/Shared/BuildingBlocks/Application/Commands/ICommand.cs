@@ -1,11 +1,11 @@
 using MediatR;
 
-namespace BuildingBlocks.Application.Commands;
+namespace Bloques.Aplicacion.Comandos;
 
-public interface ICommand : IRequest
+public interface IComando : IRequest
 {
 }
 
-public interface ICommand<out TResult> : IRequest<TResult>
+public interface IComando<out TResultado> : IRequest<TResultado>
 {
 }

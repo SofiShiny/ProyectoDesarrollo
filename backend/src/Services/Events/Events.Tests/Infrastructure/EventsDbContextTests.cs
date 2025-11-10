@@ -33,11 +33,11 @@ public class EventsDbContextTests
     {
         // Arrange
         using var context = CreateDbContext();
-        var location = new Location("Test Venue", "123 Main St", "City", "State", "12345", "USA");
+        var direccion = new Location("Test Venue", "123 Main St", "Ciudad", "State", "12345", "USA");
         var @event = new Event(
             "Test Event", 
             "Description",
-            location,
+            direccion,
             DateTime.UtcNow.AddDays(30), 
             DateTime.UtcNow.AddDays(30).AddHours(4), 
             100,
@@ -58,11 +58,11 @@ public class EventsDbContextTests
     {
         // Arrange
         using var context = CreateDbContext();
-        var location = new Location("Test Venue", "123 Main St", "City", "State", "12345", "USA");
+        var direccion = new Location("Test Venue", "123 Main St", "Ciudad", "State", "12345", "USA");
         var @event = new Event(
             "Original Name", 
             "Description",
-            location,
+            direccion,
             DateTime.UtcNow.AddDays(30), 
             DateTime.UtcNow.AddDays(30).AddHours(4), 
             100,
@@ -72,7 +72,7 @@ public class EventsDbContextTests
         await context.SaveChangesAsync();
 
         // Act
-        @event.Update("Updated Name", "New Description", location, @event.StartDate, @event.EndDate, 100);
+        @event.Update("Updated Name", "New Description", direccion, @event.StartDate, @event.EndDate, 100);
         await context.SaveChangesAsync();
 
         // Assert
@@ -86,11 +86,11 @@ public class EventsDbContextTests
     {
         // Arrange
         using var context = CreateDbContext();
-        var location = new Location("Test Venue", "123 Main St", "City", "State", "12345", "USA");
+        var direccion = new Location("Test Venue", "123 Main St", "Ciudad", "State", "12345", "USA");
         var @event = new Event(
             "Event to Delete", 
             "Description",
-            location,
+            direccion,
             DateTime.UtcNow.AddDays(30), 
             DateTime.UtcNow.AddDays(30).AddHours(4), 
             100,

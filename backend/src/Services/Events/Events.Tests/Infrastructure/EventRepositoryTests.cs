@@ -30,8 +30,8 @@ public class EventRepositoryTests
         // Arrange
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "State", "12345", "USA");
-        var eventEntity = new Event("Tech Conference", "Description", location, startDate, endDate, 500, "organizer-123");
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "State", "12345", "USA");
+        var eventEntity = new Event("Tech Conference", "Description", direccion, startDate, endDate, 500, "organizer-123");
 
         // Act
         var result = await _repository.AddAsync(eventEntity, CancellationToken.None);
@@ -50,8 +50,8 @@ public class EventRepositoryTests
         // Arrange
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "State", "12345", "USA");
-        var eventEntity = new Event("Tech Conference", "Description", location, startDate, endDate, 500, "organizer-123");
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "State", "12345", "USA");
+        var eventEntity = new Event("Tech Conference", "Description", direccion, startDate, endDate, 500, "organizer-123");
         await _context.Events.AddAsync(eventEntity);
         await _context.SaveChangesAsync();
 
@@ -83,20 +83,20 @@ public class EventRepositoryTests
         // Arrange
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "State", "12345", "USA");
-        var eventEntity = new Event("Original Title", "Description", location, startDate, endDate, 500, "organizer-123");
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "State", "12345", "USA");
+        var eventEntity = new Event("Original Title", "Description", direccion, startDate, endDate, 500, "organizer-123");
         await _context.Events.AddAsync(eventEntity);
         await _context.SaveChangesAsync();
 
         // Act
-        eventEntity.Publish();
+        eventEntity.Publicar();
         await _repository.UpdateAsync(eventEntity, CancellationToken.None);
         await _context.SaveChangesAsync();
 
         // Assert
         var updatedEvent = await _context.Events.FindAsync(eventEntity.Id);
         updatedEvent.Should().NotBeNull();
-        updatedEvent!.Status.Should().Be(EventStatus.Published);
+        updatedEvent!.Status.Should().Be(EventStatus.Publicado);
     }
 
     [Fact]
@@ -105,8 +105,8 @@ public class EventRepositoryTests
         // Arrange
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "State", "12345", "USA");
-        var eventEntity = new Event("Tech Conference", "Description", location, startDate, endDate, 500, "organizer-123");
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "State", "12345", "USA");
+        var eventEntity = new Event("Tech Conference", "Description", direccion, startDate, endDate, 500, "organizer-123");
         await _context.Events.AddAsync(eventEntity);
         await _context.SaveChangesAsync();
 
@@ -125,10 +125,10 @@ public class EventRepositoryTests
         // Arrange
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "State", "12345", "USA");
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "State", "12345", "USA");
         
-        var event1 = new Event("Conference 1", "Description 1", location, startDate, endDate, 100, "organizer-123");
-        var event2 = new Event("Conference 2", "Description 2", location, startDate.AddDays(10), endDate.AddDays(10), 200, "organizer-456");
+        var event1 = new Event("Conference 1", "Description 1", direccion, startDate, endDate, 100, "organizer-123");
+        var event2 = new Event("Conference 2", "Description 2", direccion, startDate.AddDays(10), endDate.AddDays(10), 200, "organizer-456");
         
         await _context.Events.AddRangeAsync(event1, event2);
         await _context.SaveChangesAsync();

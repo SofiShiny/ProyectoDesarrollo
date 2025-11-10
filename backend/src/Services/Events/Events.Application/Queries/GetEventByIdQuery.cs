@@ -1,7 +1,7 @@
 using BuildingBlocks.Application.Common;
 using BuildingBlocks.Application.Queries;
-using Events.Application.DTOs;
+using Eventos.Aplicacion.DTOs;
 
-namespace Events.Application.Queries;
+namespace Eventos.Aplicacion.Queries;
 
-public record GetEventByIdQuery(Guid EventId) : IQuery<Result<EventDto>>;
+public record ObtenerEventoPorIdQuery(Guid EventoId) : IQuery<Result<EventoDto>>;

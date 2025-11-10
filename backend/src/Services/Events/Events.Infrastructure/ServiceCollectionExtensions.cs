@@ -2,10 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Eventos.Dominio.Repositorios;
-using Events.Infrastructure.Persistence;
-using Events.Infrastructure.Repositories;
+using Eventos.Infraestructura.Persistence;
+using Eventos.Infraestructura.Repositorios;
 
-namespace Events.Infrastructure;
+namespace Eventos.Infraestructura;
 
 public static class ServiceCollectionExtensions
 {

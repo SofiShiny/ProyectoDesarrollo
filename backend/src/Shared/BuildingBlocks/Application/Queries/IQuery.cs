@@ -1,7 +1,7 @@
 using MediatR;
 
-namespace BuildingBlocks.Application.Queries;
+namespace Bloques.Aplicacion.Consultas;
 
-public interface IQuery<out TResult> : IRequest<TResult>
+public interface IConsulta<out TResult> : IRequest<TResult>
 {
 }

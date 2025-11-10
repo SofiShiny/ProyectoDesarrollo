@@ -1,10 +1,10 @@
-using BuildingBlocks.Domain;
+using Bloques.Dominio;
 using System;
 using System.Collections.Generic;
 
 namespace Eventos.Dominio.ObjetosDeValor;
 
-public class Ubicacion : ValueObject
+public class Ubicacion : ObjetoValor
 {
     public string NombreLugar { get; private set; } = string.Empty;
     public string Direccion { get; private set; } = string.Empty;
@@ -37,7 +37,7 @@ public class Ubicacion : ValueObject
         Pais = pais;
     }
 
-    protected override IEnumerable<object> GetEqualityComponents()
+    protected override IEnumerable<object> ObtenerComponentesDeIgualdad()
     {
         yield return NombreLugar;
         yield return Direccion;

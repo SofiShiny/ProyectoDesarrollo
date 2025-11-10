@@ -1,9 +1,9 @@
-using BuildingBlocks.Domain;
+using Bloques.Dominio;
 using System;
 
 namespace Eventos.Dominio.Entidades;
 
-public class Asistente : Entity<Guid>
+public class Asistente : Entidad<Guid>
 {
     public Guid EventoId { get; private set; }
     public string UsuarioId { get; private set; } = string.Empty;

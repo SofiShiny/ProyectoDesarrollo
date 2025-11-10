@@ -18,7 +18,7 @@ public class EventDtoTests
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddHours(8);
         var maxAttendees = 100;
-        var status = "Published";
+        var status = "Publicado";
 
         // Act
         var dto = new EventDto
@@ -50,8 +50,8 @@ public class EventDtoTests
         var locationDto = new LocationDto
         {
             VenueName = "Convention Center",
-            Address = "123 Main St",
-            City = "Tech City",
+            Direccion = "123 Main St",
+            Ciudad = "Tech Ciudad",
             State = "TC",
             ZipCode = "12345"
         };
@@ -62,7 +62,7 @@ public class EventDtoTests
         // Assert
         dto.Location.Should().NotBeNull();
         dto.Location.VenueName.Should().Be("Convention Center");
-        dto.Location.City.Should().Be("Tech City");
+        dto.Location.Ciudad.Should().Be("Tech Ciudad");
     }
 
     [Fact]

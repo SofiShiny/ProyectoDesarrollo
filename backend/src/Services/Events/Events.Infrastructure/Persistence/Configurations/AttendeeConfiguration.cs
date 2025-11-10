@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Eventos.Dominio.Entidades;
 
-namespace Events.Infrastructure.Persistence.Configurations;
+namespace Eventos.Infraestructura.Persistence.Configurations;
 
 public class AttendeeConfiguration : IEntityTypeConfiguration<Asistente>
 {

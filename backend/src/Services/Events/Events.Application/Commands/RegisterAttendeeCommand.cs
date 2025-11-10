@@ -1,11 +1,11 @@
-using BuildingBlocks.Application.Common;
-using BuildingBlocks.Application.Commands;
+using Bloques.Aplicacion.Comun;
+using Bloques.Aplicacion.Comandos;
 
 namespace Eventos.Aplicacion.Comandos;
 
-public record RegistrarAsistenteCommand(
+public record RegistrarAsistenteComando(
     Guid EventoId,
     string UsuarioId,
     string NombreUsuario,
     string Correo
-) : ICommand<Result>;
+) : IComando<Resultado>;

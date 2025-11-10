@@ -2,41 +2,41 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BuildingBlocks.Domain
+namespace Bloques.Dominio
 {
-    public abstract class ValueObject : IEquatable<ValueObject>
+    public abstract class ObjetoValor : IEquatable<ObjetoValor>
     {
-        protected abstract IEnumerable<object> GetEqualityComponents();
+        protected abstract IEnumerable<object> ObtenerComponentesDeIgualdad();
 
         public override bool Equals(object? obj)
         {
             if (obj == null || obj.GetType() != GetType())
                 return false;
 
-            var other = (ValueObject)obj;
-            return GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
+            var otro = (ObjetoValor)obj;
+            return ObtenerComponentesDeIgualdad().SequenceEqual(otro.ObtenerComponentesDeIgualdad());
         }
 
         public override int GetHashCode()
         {
-            return GetEqualityComponents()
+            return ObtenerComponentesDeIgualdad()
                 .Select(x => x?.GetHashCode() ?? 0)
                 .Aggregate((x, y) => x ^ y);
         }
 
-        public static bool operator ==(ValueObject? left, ValueObject? right)
+        public static bool operator ==(ObjetoValor? izquierda, ObjetoValor? derecha)
         {
-            if (ReferenceEquals(left, right))
+            if (ReferenceEquals(izquierda, derecha))
                 return true;
 
-            if (left is null || right is null)
+            if (izquierda is null || derecha is null)
                 return false;
 
-            return left.Equals(right);
+            return izquierda.Equals(derecha);
         }
 
-        public static bool operator !=(ValueObject? left, ValueObject? right) => !(left == right);
+        public static bool operator !=(ObjetoValor? izquierda, ObjetoValor? derecha) => !(izquierda == derecha);
 
-        public bool Equals(ValueObject? other) => Equals((object?)other);
+        public bool Equals(ObjetoValor? otro) => Equals((object?)otro);
     }
 }

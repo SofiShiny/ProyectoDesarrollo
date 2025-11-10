@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using Eventos.Dominio.Entidades;
 using Eventos.Dominio.Repositorios;
 using Eventos.Dominio.Enumeraciones;
-using Events.Infrastructure.Persistence;
+using Eventos.Infraestructura.Persistence;
 
-namespace Events.Infrastructure.Repositories;
+namespace Eventos.Infraestructura.Repositorios;
 
 public class EventRepository : IRepositorioEvento
 {

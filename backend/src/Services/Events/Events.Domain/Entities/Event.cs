@@ -1,4 +1,4 @@
-using BuildingBlocks.Domain;
+using Bloques.Dominio;
 using Eventos.Dominio.ObjetosDeValor;
 using Eventos.Dominio.Enumeraciones;
 using Eventos.Dominio.EventosDeDominio;
@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Eventos.Dominio.Entidades;
 
-public class Evento : AggregateRoot<Guid>
+public class Evento : RaizAgregada<Guid>
 {
  public string Titulo { get; private set; } = string.Empty;
  public string Descripcion { get; private set; } = string.Empty;
@@ -77,7 +77,7 @@ public class Evento : AggregateRoot<Guid>
 
  Estado = EstadoEvento.Publicado;
  
- RaiseDomainEvent(new EventoPublicadoEventoDominio(Id, Titulo, FechaInicio));
+ GenerarEventoDominio(new EventoPublicadoEventoDominio(Id, Titulo, FechaInicio));
  }
 
  public void Cancelar()
@@ -90,7 +90,7 @@ public class Evento : AggregateRoot<Guid>
 
  Estado = EstadoEvento.Cancelado;
  
- RaiseDomainEvent(new EventoCanceladoEventoDominio(Id, Titulo));
+ GenerarEventoDominio(new EventoCanceladoEventoDominio(Id, Titulo));
  }
 
  public void RegistrarAsistente(string usuarioId, string nombreUsuario, string correo)
@@ -110,7 +110,7 @@ public class Evento : AggregateRoot<Guid>
  var asistente = new Asistente(Id, usuarioId, nombreUsuario, correo);
  _asistentes.Add(asistente);
  
- RaiseDomainEvent(new AsistenteRegistradoEventoDominio(Id, usuarioId, nombreUsuario));
+ GenerarEventoDominio(new AsistenteRegistradoEventoDominio(Id, usuarioId, nombreUsuario));
  }
 
  public void AnularRegistroAsistente(string usuarioId)

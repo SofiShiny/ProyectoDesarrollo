@@ -1,9 +1,9 @@
-namespace EventPlatform.Common.Infrastructure.Persistence;
+namespace Bloques.Infraestructura.Persistencia;
 
-public interface IUnitOfWork : IDisposable
+public interface IUnidadDeTrabajo : IDisposable
 {
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-    Task BeginTransactionAsync(CancellationToken cancellationToken = default);
-    Task CommitTransactionAsync(CancellationToken cancellationToken = default);
-    Task RollbackTransactionAsync(CancellationToken cancellationToken = default);
+    Task<int> GuardarCambiosAsync(CancellationToken cancellationToken = default);
+    Task IniciarTransaccionAsync(CancellationToken cancellationToken = default);
+    Task ConfirmarTransaccionAsync(CancellationToken cancellationToken = default);
+    Task RevertirTransaccionAsync(CancellationToken cancellationToken = default);
 }

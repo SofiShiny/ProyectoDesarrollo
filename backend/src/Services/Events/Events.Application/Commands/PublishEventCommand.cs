@@ -1,6 +1,6 @@
 using BuildingBlocks.Application.Common;
-using BuildingBlocks.Application.Commands;
+using BuildingBlocks.Application.Comandos;
 
-namespace Events.Application.Commands;
+namespace Eventos.Aplicacion.Comandos;
 
-public record PublishEventCommand(Guid EventId) : ICommand<Result>;
+public record PublicarEventoComando(Guid EventoId) : IComando<Result>;

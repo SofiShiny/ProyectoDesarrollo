@@ -1,8 +1,8 @@
 using MediatR;
 
-namespace BuildingBlocks.Application.Queries;
+namespace Bloques.Aplicacion.Consultas;
 
-public interface IQueryHandler<in TQuery, TResult> : IRequestHandler<TQuery, TResult>
-    where TQuery : IQuery<TResult>
+public interface IConsultaHandler<in TQuery, TResult> : IRequestHandler<TQuery, TResult>
+    where TQuery : IConsulta<TResult>
 {
 }

@@ -5,7 +5,7 @@ public class EventoDto
     public Guid Id { get; set; }
     public string? Titulo { get; set; }
     public string? Descripcion { get; set; }
-    public LocationDto? Ubicacion { get; set; }
+    public UbicacionDto? Ubicacion { get; set; }
     public DateTime FechaInicio { get; set; }
     public DateTime FechaFin { get; set; }
     public int MaximoAsistentes { get; set; }

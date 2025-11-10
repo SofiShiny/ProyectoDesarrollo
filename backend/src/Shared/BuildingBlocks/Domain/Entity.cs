@@ -1,46 +1,48 @@
-namespace BuildingBlocks.Domain;
+using System;
 
-public abstract class Entity<TId> where TId : struct
+namespace Bloques.Dominio;
+
+public abstract class Entidad<TId> where TId : struct
 {
-    public TId Id { get; protected set; }
+ public TId Id { get; protected set; }
 
-    protected Entity()
-    {
-    }
+ protected Entidad()
+ {
+ }
 
-    protected Entity(TId id)
-    {
-        Id = id;
-    }
+ protected Entidad(TId id)
+ {
+ Id = id;
+ }
 
-    public override bool Equals(object? obj)
-    {
-        if (obj is not Entity<TId> other)
-            return false;
+ public override bool Equals(object? obj)
+ {
+ if (obj is not Entidad<TId> other)
+ return false;
 
-        return Id.Equals(other.Id);
-    }
+ return Id.Equals(other.Id);
+ }
 
-    public override int GetHashCode()
-    {
-        return Id.GetHashCode();
-    }
+ public override int GetHashCode()
+ {
+ return Id.GetHashCode();
+ }
 }
 
-public abstract class Entity
+public abstract class Entidad
 {
-    public Guid Id { get; protected set; } = Guid.NewGuid();
+ public Guid Id { get; protected set; } = Guid.NewGuid();
 
-    public override bool Equals(object? obj)
-    {
-        if (obj is not Entity other)
-            return false;
+ public override bool Equals(object? obj)
+ {
+ if (obj is not Entidad other)
+ return false;
 
-        return Id == other.Id;
-    }
+ return Id == other.Id;
+ }
 
-    public override int GetHashCode()
-    {
-        return Id.GetHashCode();
-    }
+ public override int GetHashCode()
+ {
+ return Id.GetHashCode();
+ }
 }

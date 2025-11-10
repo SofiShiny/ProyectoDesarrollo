@@ -16,12 +16,12 @@ public class EventTests
         var description = "Annual technology conference";
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Convention Center", "123 Main St", "New York", "NY", "10001", "USA");
+        var direccion = new Location("Convention Center", "123 Main St", "New York", "NY", "10001", "USA");
         var maxAttendees = 500;
         var organizerId = "organizer-123";
 
         // Act
-        var eventEntity = new Event(title, description, location, startDate, endDate, maxAttendees, organizerId);
+        var eventEntity = new Event(title, description, direccion, startDate, endDate, maxAttendees, organizerId);
 
         // Assert
         eventEntity.Should().NotBeNull();
@@ -29,7 +29,7 @@ public class EventTests
         eventEntity.Description.Should().Be(description);
         eventEntity.StartDate.Should().Be(startDate);
         eventEntity.EndDate.Should().Be(endDate);
-        eventEntity.Location.Should().Be(location);
+        eventEntity.Location.Should().Be(direccion);
         eventEntity.MaxAttendees.Should().Be(maxAttendees);
         eventEntity.Status.Should().Be(EventStatus.Draft);
         eventEntity.Attendees.Should().BeEmpty();
@@ -41,10 +41,10 @@ public class EventTests
         // Arrange
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(-1);
-        var location = new Location("Venue", "Address", "City", "ST", "12345", "USA");
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "ST", "12345", "USA");
 
         // Act
-        Action act = () => new Event("Title", "Description", location, startDate, endDate, 100, "org-123");
+        Action act = () => new Event("Title", "Description", direccion, startDate, endDate, 100, "org-123");
 
         // Assert
         act.Should().Throw<ArgumentException>()
@@ -57,10 +57,10 @@ public class EventTests
         // Arrange
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "ST", "12345", "USA");
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "ST", "12345", "USA");
 
         // Act
-        Action act = () => new Event("Title", "Description", location, startDate, endDate, -1, "org-123");
+        Action act = () => new Event("Title", "Description", direccion, startDate, endDate, -1, "org-123");
 
         // Assert
         act.Should().Throw<ArgumentException>()
@@ -73,14 +73,14 @@ public class EventTests
         // Arrange
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "ST", "12345", "USA");
-        var eventEntity = new Event("Tech Conference", "Description", location, startDate, endDate, 500, "org-123");
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "ST", "12345", "USA");
+        var eventEntity = new Event("Tech Conference", "Description", direccion, startDate, endDate, 500, "org-123");
 
         // Act
-        eventEntity.Publish();
+        eventEntity.Publicar();
 
         // Assert
-        eventEntity.Status.Should().Be(EventStatus.Published);
+        eventEntity.Status.Should().Be(EventStatus.Publicado);
     }
 
     [Fact]
@@ -89,16 +89,16 @@ public class EventTests
         // Arrange
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "ST", "12345", "USA");
-        var eventEntity = new Event("Tech Conference", "Description", location, startDate, endDate, 500, "org-123");
-        eventEntity.Publish();
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "ST", "12345", "USA");
+        var eventEntity = new Event("Tech Conference", "Description", direccion, startDate, endDate, 500, "org-123");
+        eventEntity.Publicar();
 
         // Act
-        Action act = () => eventEntity.Publish();
+        Action act = () => eventEntity.Publicar();
 
         // Assert
         act.Should().Throw<InvalidOperationException>()
-            .WithMessage("Cannot publish event in Published status");
+            .WithMessage("Cannot publicar event in Publicado status");
     }
 
     [Fact]
@@ -107,9 +107,9 @@ public class EventTests
         // Arrange
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "ST", "12345", "USA");
-        var eventEntity = new Event("Tech Conference", "Description", location, startDate, endDate, 500, "org-123");
-        eventEntity.Publish();
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "ST", "12345", "USA");
+        var eventEntity = new Event("Tech Conference", "Description", direccion, startDate, endDate, 500, "org-123");
+        eventEntity.Publicar();
 
         // Act
         eventEntity.Cancel();
@@ -124,9 +124,9 @@ public class EventTests
         // Arrange
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "ST", "12345", "USA");
-        var eventEntity = new Event("Tech Conference", "Description", location, startDate, endDate, 500, "org-123");
-        eventEntity.Publish();
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "ST", "12345", "USA");
+        var eventEntity = new Event("Tech Conference", "Description", direccion, startDate, endDate, 500, "org-123");
+        eventEntity.Publicar();
         var userId = "user-123";
         var userName = "John Doe";
         var email = "user@example.com";
@@ -148,8 +148,8 @@ public class EventTests
         // Arrange
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "ST", "12345", "USA");
-        var eventEntity = new Event("Tech Conference", "Description", location, startDate, endDate, 500, "org-123");
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "ST", "12345", "USA");
+        var eventEntity = new Event("Tech Conference", "Description", direccion, startDate, endDate, 500, "org-123");
         var userId = "user-123";
 
         // Act
@@ -166,9 +166,9 @@ public class EventTests
         // Arrange
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "ST", "12345", "USA");
-        var eventEntity = new Event("Tech Conference", "Description", location, startDate, endDate, 1, "org-123");
-        eventEntity.Publish();
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "ST", "12345", "USA");
+        var eventEntity = new Event("Tech Conference", "Description", direccion, startDate, endDate, 1, "org-123");
+        eventEntity.Publicar();
         eventEntity.RegisterAttendee("user-1", "User One", "user1@example.com");
 
         // Act
@@ -185,9 +185,9 @@ public class EventTests
         // Arrange
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "ST", "12345", "USA");
-        var eventEntity = new Event("Tech Conference", "Description", location, startDate, endDate, 2, "org-123");
-        eventEntity.Publish();
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "ST", "12345", "USA");
+        var eventEntity = new Event("Tech Conference", "Description", direccion, startDate, endDate, 2, "org-123");
+        eventEntity.Publicar();
         eventEntity.RegisterAttendee("user-1", "User One", "user1@example.com");
         eventEntity.RegisterAttendee("user-2", "User Two", "user2@example.com");
 
@@ -204,9 +204,9 @@ public class EventTests
         // Arrange
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "ST", "12345", "USA");
-        var eventEntity = new Event("Tech Conference", "Description", location, startDate, endDate, 500, "org-123");
-        eventEntity.Publish();
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "ST", "12345", "USA");
+        var eventEntity = new Event("Tech Conference", "Description", direccion, startDate, endDate, 500, "org-123");
+        eventEntity.Publicar();
         eventEntity.RegisterAttendee("user-1", "User One", "user1@example.com");
 
         // Act

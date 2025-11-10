@@ -1,35 +1,34 @@
-using BuildingBlocks.Application;
-using BuildingBlocks.Application.Common;
+using Bloques.Aplicacion.Comun;
 using Eventos.Dominio.Repositorios;
 using MediatR;
 
 namespace Eventos.Aplicacion.Comandos;
 
-public class RegistrarAsistenteCommandHandler : IRequestHandler<RegistrarAsistenteCommand, Result>
+public class RegistrarAsistenteComandoHandler : IRequestHandler<RegistrarAsistenteComando, Resultado>
 {
     private readonly IRepositorioEvento _repositorioEvento;
 
-    public RegistrarAsistenteCommandHandler(IRepositorioEvento repositorioEvento)
+    public RegistrarAsistenteComandoHandler(IRepositorioEvento repositorioEvento)
     {
         _repositorioEvento = repositorioEvento;
     }
 
-    public async Task<Result> Handle(RegistrarAsistenteCommand request, CancellationToken cancellationToken)
+    public async Task<Resultado> Handle(RegistrarAsistenteComando request, CancellationToken cancellationToken)
     {
         var evento = await _repositorioEvento.ObtenerPorIdAsync(request.EventoId, cancellationToken);
         
         if (evento == null)
-            return Result.Failure("Evento no encontrado");
+            return Resultado.Falla("Evento no encontrado");
 
         try
         {
             evento.RegistrarAsistente(request.UsuarioId, request.NombreUsuario, request.Correo);
             await _repositorioEvento.ActualizarAsync(evento, cancellationToken);
-            return Result.Success();
+            return Resultado.Exito();
         }
         catch (InvalidOperationException ex)
         {
-            return Result.Failure(ex.Message);
+            return Resultado.Falla(ex.Message);
         }
     }
 }

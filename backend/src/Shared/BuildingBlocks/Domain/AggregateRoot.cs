@@ -1,55 +1,55 @@
 using System;
 using System.Collections.Generic;
 
-namespace BuildingBlocks.Domain;
+namespace Bloques.Dominio;
 
-public abstract class AggregateRoot<TId> where TId : struct
+public abstract class RaizAgregada<TId> where TId : struct
 {
     public TId Id { get; protected set; }
-    public DateTime CreatedAt { get; protected set; } = DateTime.UtcNow;
-    public DateTime? UpdatedAt { get; protected set; }
+    public DateTime CreadoEn { get; protected set; } = DateTime.UtcNow;
+    public DateTime? ActualizadoEn { get; protected set; }
     
-    private readonly List<DomainEvent> _domainEvents = new();
+    private readonly List<EventoDominio> _eventosDominio = new();
 
-    public IReadOnlyList<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+    public IReadOnlyList<EventoDominio> EventosDominio => _eventosDominio.AsReadOnly();
 
-    protected AggregateRoot()
+    protected RaizAgregada()
     {
     }
 
-    protected AggregateRoot(TId id)
+    protected RaizAgregada(TId id)
     {
         Id = id;
     }
 
-    protected void RaiseDomainEvent(DomainEvent domainEvent)
+    protected void GenerarEventoDominio(EventoDominio eventoDominio)
     {
-        _domainEvents.Add(domainEvent);
+        _eventosDominio.Add(eventoDominio);
     }
 
-    public void ClearDomainEvents()
+    public void LimpiarEventosDominio()
     {
-        _domainEvents.Clear();
+        _eventosDominio.Clear();
     }
 }
 
-public abstract class AggregateRoot
+public abstract class RaizAgregada
 {
     public Guid Id { get; protected set; } = Guid.NewGuid();
-    public DateTime CreatedAt { get; protected set; } = DateTime.UtcNow;
-    public DateTime? UpdatedAt { get; protected set; }
+    public DateTime CreadoEn { get; protected set; } = DateTime.UtcNow;
+    public DateTime? ActualizadoEn { get; protected set; }
     
-    private readonly List<DomainEvent> _domainEvents = new();
+    private readonly List<EventoDominio> _eventosDominio = new();
 
-    public IReadOnlyList<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+    public IReadOnlyList<EventoDominio> EventosDominio => _eventosDominio.AsReadOnly();
 
-    protected void RaiseDomainEvent(DomainEvent domainEvent)
+    protected void GenerarEventoDominio(EventoDominio eventoDominio)
     {
-        _domainEvents.Add(domainEvent);
+        _eventosDominio.Add(eventoDominio);
     }
 
-    public void ClearDomainEvents()
+    public void LimpiarEventosDominio()
     {
-        _domainEvents.Clear();
+        _eventosDominio.Clear();
     }
 }

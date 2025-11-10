@@ -25,13 +25,13 @@ public class GetEventByIdQueryHandlerTests
     {
         // Arrange
         var eventId = Guid.NewGuid();
-        var location = new Location("Conference Center", "123 Main St", "Tech City", "CA", "94000", "USA");
+        var direccion = new Location("Conference Center", "123 Main St", "Tech Ciudad", "CA", "94000", "USA");
         var startDate = DateTime.UtcNow.AddMonths(1);
         var endDate = startDate.AddHours(8);
         var @event = new Event(
             "Tech Conference 2024",
             "Annual tech conference",
-            location,
+            direccion,
             startDate,
             endDate,
             100,
@@ -80,13 +80,13 @@ public class GetEventByIdQueryHandlerTests
     {
         // Arrange
         var eventId = Guid.NewGuid();
-        var location = new Location("Venue Name", "Address Line", "City", "CA", "90000", "USA");
+        var direccion = new Location("Venue Name", "Direccion Line", "Ciudad", "CA", "90000", "USA");
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddHours(4);
         var @event = new Event(
             "Conference",
             "Description",
-            location,
+            direccion,
             startDate,
             endDate,
             50,
@@ -106,11 +106,11 @@ public class GetEventByIdQueryHandlerTests
         result.Should().NotBeNull();
         result!.Location.Should().NotBeNull();
         result.Location.VenueName.Should().Be("Venue Name");
-        result.Location.Address.Should().Be("Address Line");
-        result.Location.City.Should().Be("City");
+        result.Location.Direccion.Should().Be("Direccion Line");
+        result.Location.Ciudad.Should().Be("Ciudad");
         result.Location.State.Should().Be("CA");
         result.Location.ZipCode.Should().Be("90000");
-        result.Location.Country.Should().Be("USA");
+        result.Location.Pais.Should().Be("USA");
     }
 
     [Fact]
@@ -136,13 +136,13 @@ public class GetEventByIdQueryHandlerTests
     {
         // Arrange
         var eventId = Guid.NewGuid();
-        var location = new Location("Venue", "Address", "City", "CA", "12345", "USA");
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "CA", "12345", "USA");
         var startDate = DateTime.UtcNow.AddDays(10);
         var endDate = startDate.AddHours(2);
-        var @event = new Event("Event", "Desc", location, startDate, endDate, 100, "organizer-001");
+        var @event = new Event("Event", "Desc", direccion, startDate, endDate, 100, "organizer-001");
 
         typeof(Event).GetProperty("Id")!.SetValue(@event, eventId);
-        @event.Publish();
+        @event.Publicar();
 
         // Register attendees
         @event.RegisterAttendee("user-001", "John Doe", "john@example.com");

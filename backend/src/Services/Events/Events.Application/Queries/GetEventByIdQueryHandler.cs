@@ -1,61 +1,60 @@
-using BuildingBlocks.Application;
-using Events.Domain.Repositories;
-using Events.Application.DTOs;
+using Bloques.Aplicacion.Comun;
+using Eventos.Dominio.Repositorios;
+using Eventos.Aplicacion.DTOs;
 using MediatR;
-using BuildingBlocks.Application.Common;
 
-namespace Events.Application.Queries;
+namespace Eventos.Aplicacion.Queries;
 
-public class GetEventByIdQueryHandler : IRequestHandler<GetEventByIdQuery, Result<EventDto>>
+public class ObtenerEventoPorIdQueryHandler : IRequestHandler<ObtenerEventoPorIdQuery, Resultado<EventoDto>>
 {
-    private readonly IEventRepository _eventRepository;
+    private readonly IRepositorioEvento _repositorioEvento;
 
-    public GetEventByIdQueryHandler(IEventRepository eventRepository)
+    public ObtenerEventoPorIdQueryHandler(IRepositorioEvento repositorioEvento)
     {
-        _eventRepository = eventRepository;
+        _repositorioEvento = repositorioEvento;
     }
 
-    public async Task<Result<EventDto>> Handle(GetEventByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Resultado<EventoDto>> Handle(ObtenerEventoPorIdQuery request, CancellationToken cancellationToken)
     {
-        var @event = await _eventRepository.GetByIdAsync(request.EventId, cancellationToken);
+        var evento = await _repositorioEvento.ObtenerPorIdAsync(request.EventoId, cancellationToken);
         
-        if (@event == null)
-            return Result<EventDto>.Failure("Event not found");
+        if (evento == null)
+            return Resultado<EventoDto>.Falla("Evento no encontrado");
 
-        if (@event.Location == null)
-            return Result<EventDto>.Failure("Event location data is invalid");
+        if (evento.Ubicacion == null)
+            return Resultado<EventoDto>.Falla("Los datos de ubicación del evento no son válidos");
 
-        var dto = new EventDto
+        var dto = new EventoDto
         {
-            Id = @event.Id,
-            Title = @event.Title,
-            Description = @event.Description,
-            Location = new LocationDto
+            Id = evento.Id,
+            Titulo = evento.Titulo,
+            Descripcion = evento.Descripcion,
+            Ubicacion = new UbicacionDto
             {
-                VenueName = @event.Location.VenueName,
-                Venue = @event.Location.VenueName,
-                Address = @event.Location.Address,
-                City = @event.Location.City,
-                State = @event.Location.State,
-                ZipCode = @event.Location.PostalCode,
-                Country = @event.Location.Country
+                NombreLugar = evento.Ubicacion.NombreLugar,
+                Lugar = evento.Ubicacion.NombreLugar,
+                Direccion = evento.Ubicacion.Direccion,
+                Ciudad = evento.Ubicacion.Ciudad,
+                Region = evento.Ubicacion.Region,
+                CodigoPostal = evento.Ubicacion.CodigoPostal,
+                Pais = evento.Ubicacion.Pais
             },
-            StartDate = @event.StartDate,
-            EndDate = @event.EndDate,
-            MaxAttendees = @event.MaxAttendees,
-            CurrentAttendeesCount = @event.CurrentAttendeesCount,
-            Status = @event.Status.ToString(),
-            OrganizerId = @event.OrganizerId,
-            CreatedAt = @event.CreatedAt,
-            Attendees = @event.Attendees.Select(a => new AttendeeDto
+            FechaInicio = evento.FechaInicio,
+            FechaFin = evento.FechaFin,
+            MaximoAsistentes = evento.MaximoAsistentes,
+            ConteoAsistentesActual = evento.ConteoAsistentesActual,
+            Estado = evento.Estado.ToString(),
+            OrganizadorId = evento.OrganizadorId,
+            CreadoEn = evento.CreadoEn,
+            Asistentes = evento.Asistentes.Select(a => new AsistenteDto
             {
                 Id = a.Id,
-                Name = a.UserName,
-                Email = a.Email,
-                RegisteredAt = a.RegisteredAt
+                NombreUsuario = a.NombreUsuario,
+                Correo = a.Correo,
+                RegistradoEn = a.RegistradoEn
             }).ToList()
         };
 
-        return Result<EventDto>.Success(dto);
+        return Resultado<EventoDto>.Exito(dto);
     }
 }

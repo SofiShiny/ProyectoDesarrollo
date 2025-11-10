@@ -1,30 +1,30 @@
 using BuildingBlocks.Application;
 using BuildingBlocks.Application.Common;
-using Events.Domain.Repositories;
+using Eventos.Dominio.Repositorios;
 using MediatR;
 
-namespace Events.Application.Commands;
+namespace Eventos.Aplicacion.Comandos;
 
-public class PublishEventCommandHandler : IRequestHandler<PublishEventCommand, Result>
+public class PublicarEventoComandoHandler : IRequestHandler<PublicarEventoComando, Result>
 {
-    private readonly IEventRepository _eventRepository;
+    private readonly IRepositorioEvento _repositorioEvento;
 
-    public PublishEventCommandHandler(IEventRepository eventRepository)
+    public PublicarEventoComandoHandler(IRepositorioEvento repositorioEvento)
     {
-        _eventRepository = eventRepository;
+        _repositorioEvento = repositorioEvento;
     }
 
-    public async Task<Result> Handle(PublishEventCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(PublicarEventoComando request, CancellationToken cancellationToken)
     {
-        var @event = await _eventRepository.GetByIdAsync(request.EventId, cancellationToken);
+        var evento = await _repositorioEvento.ObtenerPorIdAsync(request.EventoId, cancellationToken);
         
-        if (@event == null)
-            return Result.Failure("Event not found");
+        if (evento == null)
+            return Result.Failure("Evento no encontrado");
 
         try
         {
-            @event.Publish();
-            await _eventRepository.UpdateAsync(@event, cancellationToken);
+            evento.Publicar();
+            await _repositorioEvento.ActualizarAsync(evento, cancellationToken);
             return Result.Success();
         }
         catch (InvalidOperationException ex)

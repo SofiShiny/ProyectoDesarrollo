@@ -1,4 +1,4 @@
-/*using Events.Application.Commands;
+/*using Events.Application.Comandos;
 using Events.Domain.Entities;
 using Events.Domain.Repositories;
 using Events.Domain.ValueObjects;
@@ -6,33 +6,33 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace Events.Tests.Application.Commands;
+namespace Events.Tests.Application.Comandos;
 
-public class RegisterAttendeeCommandHandlerTests
+public class RegisterAttendeeComandoHandlerTests
 {
     private readonly Mock<IEventRepository> _eventRepositoryMock;
-    private readonly RegisterAttendeeCommandHandler _handler;
+    private readonly RegisterAttendeeComandoHandler _handler;
 
-    public RegisterAttendeeCommandHandlerTests()
+    public RegisterAttendeeComandoHandlerTests()
     {
         _eventRepositoryMock = new Mock<IEventRepository>();
-        _handler = new RegisterAttendeeCommandHandler(_eventRepositoryMock.Object);
+        _handler = new RegisterAttendeeComandoHandler(_eventRepositoryMock.Object);
     }
 
     [Fact]
-    public async Task Handle_WithValidCommand_ShouldRegisterAttendee()
+    public async Task Handle_WithValidComando_ShouldRegisterAttendee()
     {
         // Arrange
         var eventId = Guid.NewGuid();
-        var userId = "user-001"; // Changed from Guid to string to match RegisterAttendeeCommand signature
+        var userId = "user-001"; // Changed from Guid to string to match RegisterAttendeeComando signature
         var userName = "John Doe";
         var email = "user@example.com";
-        var command = new RegisterAttendeeCommand(eventId, userId, userName, email);
+        var comando = new RegisterAttendeeComando(eventId, userId, userName, email);
         
         var startDate = DateTime.UtcNow.AddDays(30);
         var endDate = startDate.AddDays(2);
-        var location = new Location("Venue", "Address", "City", "CA", "12345", "USA");
-        var eventEntity = new Event("Tech Conference", "Description", location, startDate, endDate, 500, "organizer-001");
+        var direccion = new Location("Venue", "Direccion", "Ciudad", "CA", "12345", "USA");
+        var eventEntity = new Event("Tech Conference", "Description", direccion, startDate, endDate, 500, "organizer-001");
         
         var idProperty = typeof(Event).GetProperty("Id");
         if (idProperty != null && idProperty.CanWrite)
@@ -40,7 +40,7 @@ public class RegisterAttendeeCommandHandlerTests
             idProperty.SetValue(eventEntity, eventId);
         }
         
-        eventEntity.Publish();
+        eventEntity.Publicar();
 
         _eventRepositoryMock
             .Setup(x => x.GetByIdAsync(eventId, It.IsAny<CancellationToken>()))
@@ -51,7 +51,7 @@ public class RegisterAttendeeCommandHandlerTests
             .Returns(Task.CompletedTask);
 
         // Act
-        var result = await _handler.Handle(command, CancellationToken.None);
+        var result = await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         result.Should().NotBeNull();
@@ -68,14 +68,14 @@ public class RegisterAttendeeCommandHandlerTests
     {
         // Arrange
         var eventId = Guid.NewGuid();
-        var command = new RegisterAttendeeCommand(eventId, "user-001", "John Doe", "user@example.com");
+        var comando = new RegisterAttendeeComando(eventId, "user-001", "John Doe", "user@example.com");
 
         _eventRepositoryMock
             .Setup(x => x.GetByIdAsync(eventId, It.IsAny<CancellationToken>()))
             .ReturnsAsync((Event?)null);
 
         // Act
-        Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
+        Func<Task> act = async () => await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         await act.Should().ThrowAsync<InvalidOperationException>()

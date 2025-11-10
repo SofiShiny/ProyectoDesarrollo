@@ -1,15 +1,15 @@
-using BuildingBlocks.Domain;
+using Bloques.Dominio;
 
 namespace Eventos.Dominio.EventosDeDominio;
 
-public class EventoCanceladoEventoDominio : DomainEvent
+public class EventoCanceladoEventoDominio : EventoDominio
 {
-    public Guid EventoId { get; }
-    public string TituloEvento { get; }
+ public Guid EventoId { get; }
+ public string TituloEvento { get; }
 
-    public EventoCanceladoEventoDominio(Guid eventoId, string tituloEvento)
-    {
-        EventoId = eventoId;
-        TituloEvento = tituloEvento;
-    }
+ public EventoCanceladoEventoDominio(Guid eventoId, string tituloEvento)
+ {
+ EventoId = eventoId;
+ TituloEvento = tituloEvento;
+ }
 }

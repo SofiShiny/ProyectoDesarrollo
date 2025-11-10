@@ -21,10 +21,10 @@ public class EventStatusTests
     public void EventStatus_ShouldHavePublishedValue()
     {
         // Act
-        var status = EventStatus.Published;
+        var status = EventStatus.Publicado;
 
         // Assert
-        status.Should().Be(EventStatus.Published);
+        status.Should().Be(EventStatus.Publicado);
         ((int)status).Should().Be(1);
     }
 
@@ -52,7 +52,7 @@ public class EventStatusTests
 
     [Theory]
     [InlineData(EventStatus.Draft, "Draft")]
-    [InlineData(EventStatus.Published, "Published")]
+    [InlineData(EventStatus.Publicado, "Publicado")]
     [InlineData(EventStatus.Cancelled, "Cancelled")]
     [InlineData(EventStatus.Completed, "Completed")]
     public void EventStatus_ShouldConvertToString(EventStatus status, string expected)
@@ -69,7 +69,7 @@ public class EventStatusTests
     {
         // Arrange
         var draft = EventStatus.Draft;
-        var published = EventStatus.Published;
+        var published = EventStatus.Publicado;
 
         // Act & Assert
         draft.Should().NotBe(published);
@@ -85,7 +85,7 @@ public class EventStatusTests
         // Assert
         values.Should().HaveCount(4);
         values.Should().Contain(EventStatus.Draft);
-        values.Should().Contain(EventStatus.Published);
+        values.Should().Contain(EventStatus.Publicado);
         values.Should().Contain(EventStatus.Cancelled);
         values.Should().Contain(EventStatus.Completed);
     }

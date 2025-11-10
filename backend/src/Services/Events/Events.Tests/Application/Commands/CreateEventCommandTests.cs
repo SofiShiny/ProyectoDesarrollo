@@ -1,78 +1,78 @@
-using Events.Application.Commands;
-using Events.Application.DTOs;
+using Eventos.Aplicacion.Comandos;
+using Eventos.Aplicacion.DTOs;
 using FluentAssertions;
 using Xunit;
 
-namespace Events.Tests.Application.Commands;
+namespace Eventos.Tests.Application.Comandos;
 
-public class CreateEventCommandTests
+public class CrearEventoComandoTests
 {
     [Fact]
     public void Constructor_ShouldInitializePropertiesCorrectly()
     {
         // Arrange
-        var location = new LocationDto
+        var ubicacion = new UbicacionDto
         {
-            VenueName = "Centro de Convenciones",
-            Address = "Av. Principal 123",
-            City = "Caracas",
-            State = "DF",
-            ZipCode = "1010",
-            Country = "Venezuela"
+            NombreLugar = "Centro de Convenciones",
+            Lugar = "Av. Principal123",
+            Ciudad = "Caracas",
+            Region = "DF",
+            CodigoPostal = "1010",
+            Pais = "Venezuela"
         };
 
         var startDate = DateTime.UtcNow.AddDays(10);
         var endDate = startDate.AddDays(2);
 
         // Act
-        var command = new CreateEventCommand(
-            Title: "Conferencia de Tecnología",
-            Description: "Evento anual sobre innovación",
-            Location: location,
-            StartDate: startDate,
-            EndDate: endDate,
-            MaxAttendees: 300,
-            OrganizerId: "org-001"
+        var comando = new CrearEventoComando(
+            "Conferencia de Tecnología",
+            "Evento anual sobre innovación",
+            ubicacion,
+            startDate,
+            endDate,
+            300,
+            "org-001"
         );
 
         // Assert
-        command.Title.Should().Be("Conferencia de Tecnología");
-        command.Description.Should().Be("Evento anual sobre innovación");
-        command.Location.Should().Be(location);
-        command.StartDate.Should().Be(startDate);
-        command.EndDate.Should().Be(endDate);
-        command.MaxAttendees.Should().Be(300);
-        command.OrganizerId.Should().Be("org-001");
+        comando.Titulo.Should().Be("Conferencia de Tecnología");
+        comando.Descripcion.Should().Be("Evento anual sobre innovación");
+        comando.Ubicacion.Should().Be(ubicacion);
+        comando.FechaInicio.Should().Be(startDate);
+        comando.FechaFin.Should().Be(endDate);
+        comando.MaximoAsistentes.Should().Be(300);
+        comando.OrganizadorId.Should().Be("org-001");
     }
 
     [Fact]
     public void Equality_ShouldWorkCorrectly()
     {
         // Arrange
-        var location = new LocationDto
+        var ubicacion = new UbicacionDto
         {
-            VenueName = "Centro de Convenciones",
-            Address = "Av. Principal 123",
-            City = "Caracas",
-            State = "DF",
-            ZipCode = "1010",
-            Country = "Venezuela"
+            NombreLugar = "Centro de Convenciones",
+            Lugar = "Av. Principal123",
+            Ciudad = "Caracas",
+            Region = "DF",
+            CodigoPostal = "1010",
+            Pais = "Venezuela"
         };
 
-        var command1 = new CreateEventCommand(
-            Title: "Evento",
-            Description: "Descripción",
-            Location: location,
-            StartDate: DateTime.UtcNow,
-            EndDate: DateTime.UtcNow.AddDays(1),
-            MaxAttendees: 100,
-            OrganizerId: "org-001"
+        var comando1 = new CrearEventoComando(
+            "Evento",
+            "Descripción",
+            ubicacion,
+            DateTime.UtcNow,
+            DateTime.UtcNow.AddDays(1),
+            100,
+            "org-001"
         );
 
-        var command2 = command1 with { };
+        var comando2 = comando1 with { };
 
         // Assert
-        command1.Should().Be(command2);
-        command1.GetHashCode().Should().Be(command2.GetHashCode());
+        comando1.Should().Be(comando2);
+        comando1.GetHashCode().Should().Be(comando2.GetHashCode());
     }
 }
