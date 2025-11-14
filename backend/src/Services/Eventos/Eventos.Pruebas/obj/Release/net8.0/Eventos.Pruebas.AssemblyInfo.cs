@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Eventos.Pruebas")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+24da7c3a90d8b606502eddd2df8325dfaa92b438")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0fbfadd3f3a4bc98424042f3f5839d49edf0874f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Eventos.Pruebas")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Eventos.Pruebas")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

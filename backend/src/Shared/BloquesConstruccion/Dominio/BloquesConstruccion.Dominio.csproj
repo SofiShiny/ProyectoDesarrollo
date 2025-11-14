@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Cambiado de net9.0 a net8.0 para compatibilidad con todos los servicios -->
+    <TargetFramework>net8.0</TargetFramework>
+    <!-- Prevent SDK from generating a localized TargetFrameworkAttribute that may use incorrect identifier -->
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.0.1" />
+  </ItemGroup>
+
+</Project>

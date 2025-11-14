@@ -8,20 +8,30 @@ namespace Eventos.Pruebas.Aplicacion.Validators
  public class AsistenteCreateValidatorTests
  {
  [Fact]
- public void ValidAsistente_ShouldBeValid()
+ public void AsistenteValido_DeberiaSerValido()
  {
- var dto = new AsistenteCreateDto { Nombre = "Luz", Correo = "luz@example.com" };
+ // Preparar
+ var dto = new AsistenteCreateDto { Nombre = "Creonte Dioniso Lara Wilson", Correo = "cdlara@est.ucab.edu.ve" };
  var validator = new AsistenteCreateValidator();
+ 
+ // Actuar
  var result = validator.Validate(dto);
+ 
+ // Comprobar
  result.IsValid.Should().BeTrue();
  }
 
  [Fact]
- public void InvalidEmail_ShouldHaveError()
+ public void EmailInvalido_DeberiaTenerError()
  {
- var dto = new AsistenteCreateDto { Nombre = "Luz", Correo = "invalid-email" };
+ // Preparar
+ var dto = new AsistenteCreateDto { Nombre = "Creonte Dioniso Lara Wilson", Correo = "invalid-email" };
  var validator = new AsistenteCreateValidator();
+ 
+ // Actuar
  var result = validator.Validate(dto);
+ 
+ // Comprobar
  result.IsValid.Should().BeFalse();
  result.Errors.Should().Contain(e => e.PropertyName == "Correo");
  }

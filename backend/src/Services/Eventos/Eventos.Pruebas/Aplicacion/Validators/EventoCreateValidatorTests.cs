@@ -10,29 +10,34 @@ namespace Eventos.Pruebas.Aplicacion.Validators
  public class EventoCreateValidatorTests
  {
  [Fact]
- public void ValidData_ShouldBeValid()
+ public void DatosValidos_DeberiaSerValido()
  {
+ // Preparar
  var dto = new EventoCreateDto
  {
- Titulo = "Concierto",
+ Titulo = "Taller de Arte",
  FechaInicio = DateTime.UtcNow.AddDays(1),
  FechaFin = DateTime.UtcNow.AddDays(1).AddHours(2),
  MaximoAsistentes =10,
  Asistentes = new List<AsistenteCreateDto>
  {
- new AsistenteCreateDto { Nombre = "Juan", Correo = "juan@example.com" }
+ new AsistenteCreateDto { Nombre = "Creonte Dioniso Lara Wilson", Correo = "cdlara@est.ucab.edu.ve" }
  }
  };
 
  var validator = new EventoCreateValidator();
+ 
+ // Actuar
  var result = validator.Validate(dto);
 
+ // Comprobar
  result.IsValid.Should().BeTrue();
  }
 
  [Fact]
- public void MissingTitulo_ShouldHaveError()
+ public void TituloFaltante_DeberiaTenerError()
  {
+ // Preparar
  var dto = new EventoCreateDto
  {
  Titulo = string.Empty,
@@ -42,66 +47,81 @@ namespace Eventos.Pruebas.Aplicacion.Validators
  };
 
  var validator = new EventoCreateValidator();
+ 
+ // Actuar
  var result = validator.Validate(dto);
 
+ // Comprobar
  result.IsValid.Should().BeFalse();
  result.Errors.Should().Contain(e => e.PropertyName == "Titulo");
  }
 
  [Fact]
- public void FechaInicioAfterFechaFin_ShouldHaveError()
+ public void FechaInicioMayorQueFechaFin_DeberiaTenerError()
  {
+ // Preparar
  var dto = new EventoCreateDto
  {
- Titulo = "Evento",
+ Titulo = "Taller de Arte",
  FechaInicio = DateTime.UtcNow.AddDays(2),
  FechaFin = DateTime.UtcNow.AddDays(1),
  MaximoAsistentes =5
  };
 
  var validator = new EventoCreateValidator();
+ 
+ // Actuar
  var result = validator.Validate(dto);
 
+ // Comprobar
  result.IsValid.Should().BeFalse();
  result.Errors.Should().Contain(e => e.PropertyName == "FechaInicio" || e.ErrorMessage.Contains("FechaInicio"));
  }
 
  [Fact]
- public void InvalidMaximoAsistentes_ShouldHaveError()
+ public void MaximoAsistentesInvalido_DeberiaTenerError()
  {
+ // Preparar
  var dto = new EventoCreateDto
  {
- Titulo = "Evento",
+ Titulo = "Taller de Arte",
  FechaInicio = DateTime.UtcNow.AddDays(1),
  FechaFin = DateTime.UtcNow.AddDays(1).AddHours(1),
  MaximoAsistentes =0
  };
 
  var validator = new EventoCreateValidator();
+ 
+ // Actuar
  var result = validator.Validate(dto);
 
+ // Comprobar
  result.IsValid.Should().BeFalse();
  result.Errors.Should().Contain(e => e.PropertyName == "MaximoAsistentes");
  }
 
  [Fact]
- public void InvalidAsistenteEmail_ShouldHaveError()
+ public void EmailDeAsistenteInvalido_DeberiaTenerError()
  {
+ // Preparar
  var dto = new EventoCreateDto
  {
- Titulo = "Evento",
+ Titulo = "Taller de Arte",
  FechaInicio = DateTime.UtcNow.AddDays(1),
  FechaFin = DateTime.UtcNow.AddDays(1).AddHours(1),
  MaximoAsistentes =5,
  Asistentes = new List<AsistenteCreateDto>
  {
- new AsistenteCreateDto { Nombre = "Ana", Correo = "not-an-email" }
+ new AsistenteCreateDto { Nombre = "Creonte Dioniso Lara Wilson", Correo = "not-an-email" }
  }
  };
 
  var validator = new EventoCreateValidator();
+ 
+ // Actuar
  var result = validator.Validate(dto);
 
+ // Comprobar
  result.IsValid.Should().BeFalse();
  result.Errors.Should().Contain(e => e.PropertyName.Contains("Asistentes"));
  }
