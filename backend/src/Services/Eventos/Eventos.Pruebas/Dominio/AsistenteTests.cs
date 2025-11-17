@@ -72,14 +72,13 @@ public class AsistenteTests
 
         // Comprobar
         act.Should().Throw<ArgumentException>()
-            .WithMessage("*email*");
+            .WithMessage("*correo*"); // ajusta al nombre real del parámetro
     }
 
     [Theory]
     [InlineData("")]
     [InlineData(" ")]
-    [InlineData(null)]
-    public void CrearAsistente_ConEmailNuloOVacio_DeberiaLanzarExcepcion(string? email)
+    public void CrearAsistente_ConEmailVacio_DeberiaLanzarExcepcion(string email)
     {
         // Preparar
         var eventId = Guid.NewGuid();

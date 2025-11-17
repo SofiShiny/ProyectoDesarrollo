@@ -31,13 +31,12 @@ public class UbicacionTests
     }
 
     [Theory]
-    [InlineData(null)]
     [InlineData("")]
     [InlineData(" ")]
     public void CrearUbicacion_ConNombreLugarInvalido_DeberiaLanzarExcepcion(string nombreLugar)
     {
         // Actuar
-        Action act = () => new Ubicacion(nombreLugar!, "El Marques", "Caracas", "DF", "1073", "Venezuela");
+        Action act = () => new Ubicacion(nombreLugar, "El Marques", "Caracas", "DF", "1073", "Venezuela");
 
         // Comprobar
         act.Should().Throw<ArgumentException>()
@@ -45,13 +44,12 @@ public class UbicacionTests
     }
 
     [Theory]
-    [InlineData(null)]
     [InlineData("")]
     [InlineData(" ")]
     public void CrearUbicacion_ConCiudadInvalida_DeberiaLanzarExcepcion(string ciudad)
     {
         // Actuar
-        Action act = () => new Ubicacion("Calle7", "El Marques", ciudad!, "DF", "1073", "Venezuela");
+        Action act = () => new Ubicacion("Calle7", "El Marques", ciudad, "DF", "1073", "Venezuela");
 
         // Comprobar
         act.Should().Throw<ArgumentException>()

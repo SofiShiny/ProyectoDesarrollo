@@ -14,7 +14,7 @@ public class CrearEventoComandoTests
         var ubicacion = new UbicacionDto
         {
             NombreLugar = "Centro de Convenciones",
-            Lugar = "Av. Principal123",
+            Direccion = "Av. Principal123",
             Ciudad = "Caracas",
             Region = "DF",
             CodigoPostal = "1010",
@@ -26,8 +26,8 @@ public class CrearEventoComandoTests
 
         // Act
         var comando = new CrearEventoComando(
-            "Conferencia de Tecnología",
-            "Evento anual sobre innovación",
+            "Conferencia de Tecnologia",
+            "Evento anual sobre innovacion",
             ubicacion,
             startDate,
             endDate,
@@ -36,14 +36,12 @@ public class CrearEventoComandoTests
         );
 
         // Assert
-        comando.Titulo.Should().Be("Conferencia de Tecnología");
-        comando.Descripcion.Should().Be("Evento anual sobre innovación");
+        comando.Titulo.Should().Be("Conferencia de Tecnologia");
+        comando.Descripcion.Should().Be("Evento anual sobre innovacion");
         comando.Ubicacion.Should().Be(ubicacion);
         comando.FechaInicio.Should().Be(startDate);
         comando.FechaFin.Should().Be(endDate);
         comando.MaximoAsistentes.Should().Be(300);
         comando.OrganizadorId.Should().Be("org-001");
     }
-
-   
 }

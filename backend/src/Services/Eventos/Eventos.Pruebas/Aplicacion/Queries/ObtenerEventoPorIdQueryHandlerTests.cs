@@ -59,7 +59,7 @@ public class ObtenerEventoPorIdQueryHandlerTests
     }
 
     [Fact]
-    public async Task Handle_DeberiaDevolverNull_CuandoEventoNoExiste()
+    public async Task Handle_DeberiaDevolverFalla_CuandoEventoNoExiste()
     {
         // Preparar
         var eventId = Guid.NewGuid();
@@ -72,7 +72,6 @@ public class ObtenerEventoPorIdQueryHandlerTests
         var result = await _handler.Handle(query, CancellationToken.None);
 
         // Assert
-        // Handler returns a failure Resultado, not null
         result.Should().NotBeNull();
         result!.EsExitoso.Should().BeFalse();
         result.Error.Should().Be("Evento no encontrado");
@@ -110,7 +109,7 @@ public class ObtenerEventoPorIdQueryHandlerTests
         result.Should().NotBeNull();
         var dto = result!.Value!;
         dto.Ubicacion.Should().NotBeNull();
-        dto.Ubicacion.NombreLugar.Should().Be("Av Principal123");
+        dto.Ubicacion!.NombreLugar.Should().Be("Av Principal123");
         dto.Ubicacion.Direccion.Should().Be("Sucre");
         dto.Ubicacion.Ciudad.Should().Be("Caracas");
         dto.Ubicacion.Region.Should().Be("DF");
@@ -119,7 +118,7 @@ public class ObtenerEventoPorIdQueryHandlerTests
     }
 
     [Fact]
-    public async Task Handle_DeberiaPropagarOperacionCancelada_CuandoElTokenEstaCancelado()
+    public async Task Handle_DeberiaPropagarOperacionCancelada_CuandoTokenCancelado()
     {
         // Preparar
         var eventId = Guid.NewGuid();
