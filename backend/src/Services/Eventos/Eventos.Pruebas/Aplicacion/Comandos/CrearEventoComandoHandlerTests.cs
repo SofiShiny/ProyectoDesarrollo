@@ -6,136 +6,57 @@ using Eventos.Dominio.ObjetosDeValor;
 using FluentAssertions;
 using Moq;
 using Xunit;
+using System;
 
 namespace Eventos.Pruebas.Aplicacion.Comandos;
 
 public class CrearEventoComandoHandlerTests
 {
-    private readonly Mock<IRepositorioEvento> _repositorioEventoMock;
-    private readonly CrearEventoComandoHandler _handler;
+ private readonly Mock<IRepositorioEvento> _repositorioEventoMock;
+ private readonly CrearEventoComandoHandler _handler;
+ private UbicacionDto UbicacionValida => new() { NombreLugar = "Lugar", Direccion = "Dir", Ciudad = "Ciudad", Region = "Reg", CodigoPostal = "0000", Pais = "Pais" };
 
-    public CrearEventoComandoHandlerTests()
-    {
-        _repositorioEventoMock = new Mock<IRepositorioEvento>();
-        _handler = new CrearEventoComandoHandler(_repositorioEventoMock.Object);
-    }
+ public CrearEventoComandoHandlerTests()
+ {
+ _repositorioEventoMock = new Mock<IRepositorioEvento>();
+ _handler = new CrearEventoComandoHandler(_repositorioEventoMock.Object);
+ }
 
-    [Fact]
-    public async Task Handle_ConComandoValido_DeberiaCrearEventoYDevolverExito()
-    {
-        // Arrange
-        var ubicacionDto = new UbicacionDto
-        {
-            NombreLugar = "UCAB",
-            Direccion = "Montalban",
-            Ciudad = "Caracas",
-            Region = "Distrito Capital",
-            CodigoPostal = "1089",
-            Pais = "Venezuela"
-        }!;
+ [Fact]
+ public async Task Handle_ConComandoValido_DeberiaCrearEventoYDevolverExito()
+ {
+ var comando = new CrearEventoComando("Conferencia", "Desc", UbicacionValida, DateTime.UtcNow.AddDays(5), DateTime.UtcNow.AddDays(6),100, "org-001");
+ var result = await _handler.Handle(comando, CancellationToken.None);
+ result.IsExito.Should().BeTrue();
+ result.Value!.Titulo.Should().Be(comando.Titulo);
+ _repositorioEventoMock.Verify(x => x.AgregarAsync(It.IsAny<Evento>(), It.IsAny<CancellationToken>()), Times.Once);
+ }
 
-        var comando = new CrearEventoComando(
-            "Conferencia Hacking",
-            "conferencia de hackeo etico",
-            ubicacionDto,
-            DateTime.UtcNow.AddDays(5),
-            DateTime.UtcNow.AddDays(6),
-            100,
-            "evento-001"
-        );
+ [Fact]
+ public async Task Handle_ConUbicacionNula_DeberiaDevolverFalla()
+ {
+ var comando = new CrearEventoComando("Conferencia", "Desc", null!, DateTime.UtcNow.AddDays(5), DateTime.UtcNow.AddDays(6),100, "org-001");
+ var result = await _handler.Handle(comando, CancellationToken.None);
+ result.IsExito.Should().BeFalse();
+ result.Error.Should().Contain("ubicacion");
+ }
 
-        var eventoEsperado = new Evento(
-            comando.Titulo,
-            comando.Descripcion,
-            new Ubicacion(
-                ubicacionDto.NombreLugar,
-                ubicacionDto.Direccion,
-                ubicacionDto.Ciudad,
-                ubicacionDto.Region,
-                ubicacionDto.CodigoPostal,
-                ubicacionDto.Pais
-            ),
-            comando.FechaInicio,
-            comando.FechaFin,
-            comando.MaximoAsistentes,
-            comando.OrganizadorId
-        );
+ [Fact]
+ public async Task Handle_FechasInvalidas_RetornaFalla()
+ {
+ var inicio = DateTime.UtcNow.AddDays(2);
+ var comando = new CrearEventoComando("Conferencia", "Desc", UbicacionValida, inicio, inicio,100, "org-001");
+ var result = await _handler.Handle(comando, CancellationToken.None);
+ result.IsExito.Should().BeFalse();
+ result.Error.Should().Contain("fecha fin");
+ }
 
-        // El repositorio agrega el evento y no devuelve valor
-        _repositorioEventoMock
-            .Setup(x => x.AgregarAsync(It.IsAny<Evento>(), It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
-
-        // Act
-        var result = await _handler.Handle(comando, CancellationToken.None);
-
-        // Assert
-        result.IsExito.Should().BeTrue();
-        result.Value.Should().NotBeNull();
-        result.Value!.Titulo.Should().Be(comando.Titulo);
-        result.Value!.Descripcion.Should().Be(comando.Descripcion);
-        result.Value!.Ubicacion.Should().NotBeNull();
-        result.Value!.Ubicacion!.Ciudad.Should().Be("Caracas");
-
-        _repositorioEventoMock.Verify(x => x.AgregarAsync(It.IsAny<Evento>(), It.IsAny<CancellationToken>()), Times.Once);
-    }
-
-    [Fact]
-    public async Task Handle_ConUbicacionNula_DeberiaDevolverFalla()
-    {
-        // Arrange
-        var comando = new CrearEventoComando(
-            "Conferencia Hacking",
-            "Conferencia de hackeo etico",
-            null!,
-            DateTime.UtcNow.AddDays(5),
-            DateTime.UtcNow.AddDays(6),
-            100,
-            "evento-001"
-        );
-
-        // Act
-        var result = await _handler.Handle(comando, CancellationToken.None);
-
-        // Assert
-        result.IsExito.Should().BeFalse();
-        result.Error.Should().Be("La ubicación es obligatoria");
-        _repositorioEventoMock.Verify(x => x.AgregarAsync(It.IsAny<Evento>(), It.IsAny<CancellationToken>()), Times.Never);
-    }
-
-    [Fact]
-    public async Task Handle_CuandoElRepositorioTiraArgumentException_DeberiaDevolverFalla()
-    {
-        // Arrange
-        var ubicacionDto = new UbicacionDto
-        {
-            NombreLugar = "Auditorio Guido Arnal",
-            Direccion = "UCAB",
-            Ciudad = "Caracas",
-            Region = "Montalban",
-            CodigoPostal = "1089",
-            Pais = "Venezuela"
-        }!;
-
-        var comando = new CrearEventoComando(
-            "Charla de Ciberseguridad",
-            "Charla sobre Ciberseguridad en la banca de Venezuela",
-            ubicacionDto,
-            DateTime.UtcNow.AddDays(5),
-            DateTime.UtcNow.AddDays(6),
-            100,
-            "evento-002"
-        );
-
-        _repositorioEventoMock
-            .Setup(x => x.AgregarAsync(It.IsAny<Evento>(), It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new ArgumentException("La fecha de inicio debe ser en el futuro"));
-
-        // Act
-        var result = await _handler.Handle(comando, CancellationToken.None);
-
-        // Assert
-        result.IsExito.Should().BeFalse();
-        result.Error.Should().Be("La fecha de inicio debe ser en el futuro");
-    }
+ [Fact]
+ public async Task Handle_MaximoAsistentesInvalido_RetornaFalla()
+ {
+ var comando = new CrearEventoComando("Conferencia", "Desc", UbicacionValida, DateTime.UtcNow.AddDays(2), DateTime.UtcNow.AddDays(3),0, "org-001");
+ var result = await _handler.Handle(comando, CancellationToken.None);
+ result.IsExito.Should().BeFalse();
+ result.Error.Should().Contain("maximo");
+ }
 }

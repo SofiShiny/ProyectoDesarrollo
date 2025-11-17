@@ -22,7 +22,17 @@ public class CrearEventoComandoHandler : IRequestHandler<CrearEventoComando, Res
         {
             if (request.Ubicacion == null)
             {
-                return Resultado<EventoDto>.Falla("La ubicación es obligatoria");
+                return Resultado<EventoDto>.Falla("La ubicacion es obligatoria");
+            }
+
+            if (request.FechaFin <= request.FechaInicio)
+            {
+                return Resultado<EventoDto>.Falla("La fecha fin debe ser posterior a la fecha inicio");
+            }
+
+            if (request.MaximoAsistentes <= 0)
+            {
+                return Resultado<EventoDto>.Falla("El maximo de asistentes debe ser mayor que cero");
             }
 
             var ubicacion = new Ubicacion(
@@ -46,8 +56,7 @@ public class CrearEventoComandoHandler : IRequestHandler<CrearEventoComando, Res
 
             await _repositorioEvento.AgregarAsync(evento, cancellationToken);
 
-            var dto = MapToDto(evento);
-            return Resultado<EventoDto>.Exito(dto);
+            return Resultado<EventoDto>.Exito(MapToDto(evento));
         }
         catch (ArgumentException ex)
         {
@@ -55,29 +64,26 @@ public class CrearEventoComandoHandler : IRequestHandler<CrearEventoComando, Res
         }
     }
 
-    private EventoDto MapToDto(Evento evento)
+    private EventoDto MapToDto(Evento evento) => new()
     {
-        return new EventoDto
+        Id = evento.Id,
+        Titulo = evento.Titulo,
+        Descripcion = evento.Descripcion,
+        Ubicacion = new UbicacionDto
         {
-            Id = evento.Id,
-            Titulo = evento.Titulo,
-            Descripcion = evento.Descripcion,
-            Ubicacion = new UbicacionDto
-            {
-                NombreLugar = evento.Ubicacion?.NombreLugar ?? string.Empty,
-                Direccion = evento.Ubicacion?.Direccion ?? string.Empty,
-                Ciudad = evento.Ubicacion?.Ciudad ?? string.Empty,
-                Region = evento.Ubicacion?.Region ?? string.Empty,
-                CodigoPostal = evento.Ubicacion?.CodigoPostal ?? string.Empty,
-                Pais = evento.Ubicacion?.Pais ?? string.Empty
-            },
-            FechaInicio = evento.FechaInicio,
-            FechaFin = evento.FechaFin,
-            MaximoAsistentes = evento.MaximoAsistentes,
-            ConteoAsistentesActual = evento.ConteoAsistentesActual,
-            Estado = evento.Estado.ToString(),
-            OrganizadorId = evento.OrganizadorId,
-            CreadoEn = evento.CreadoEn
-        };
-    }
+            NombreLugar = evento.Ubicacion?.NombreLugar ?? string.Empty,
+            Direccion = evento.Ubicacion?.Direccion ?? string.Empty,
+            Ciudad = evento.Ubicacion?.Ciudad ?? string.Empty,
+            Region = evento.Ubicacion?.Region ?? string.Empty,
+            CodigoPostal = evento.Ubicacion?.CodigoPostal ?? string.Empty,
+            Pais = evento.Ubicacion?.Pais ?? string.Empty
+        },
+        FechaInicio = evento.FechaInicio,
+        FechaFin = evento.FechaFin,
+        MaximoAsistentes = evento.MaximoAsistentes,
+        ConteoAsistentesActual = evento.ConteoAsistentesActual,
+        Estado = evento.Estado.ToString(),
+        OrganizadorId = evento.OrganizadorId,
+        CreadoEn = evento.CreadoEn
+    };
 }

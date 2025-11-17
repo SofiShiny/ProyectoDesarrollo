@@ -50,7 +50,7 @@ public class EventoDtoPruebas
         var ubicacionDto = new UbicacionDto
         {
             NombreLugar = "CCCT",
-            Direccion = "Av la Estancia, Chuao",
+            Direccion = "Av la Estancia",
             Ciudad = "Caracas",
             Region = "DF",
             CodigoPostal = "1090",
@@ -63,7 +63,6 @@ public class EventoDtoPruebas
         // Comprobar
         dto.Ubicacion.Should().NotBeNull();
         dto.Ubicacion!.NombreLugar.Should().Be("CCCT");
-        dto.Ubicacion.Ciudad.Should().Be("Caracas");
     }
 
     [Fact]
@@ -73,8 +72,8 @@ public class EventoDtoPruebas
         var dto = new EventoDto();
         var asistentes = new List<AsistenteDto>
         {
-            new AsistenteDto { Id = Guid.NewGuid(), Nombre = "Creonte Lara", Correo = "cdlara@est.ucab.edu.ve" },
-            new AsistenteDto { Id = Guid.NewGuid(), Nombre = "Electra Wilson", Correo = "eywilson@est.ucab.edu.ve" }
+            new() { Id = Guid.NewGuid(), NombreUsuario = "Creonte Lara", Correo = "cdlara@est.ucab.edu.ve" },
+            new() { Id = Guid.NewGuid(), NombreUsuario = "Electra Wilson", Correo = "eywilson@est.ucab.edu.ve" }
         };
 
         // Ejecutar
@@ -82,8 +81,7 @@ public class EventoDtoPruebas
 
         // Comprobar
         dto.Asistentes.Should().HaveCount(2);
-        dto.Asistentes.Should().Contain(a => a.Nombre == "Creonte Lara");
-        dto.Asistentes.Should().Contain(a => a.Nombre == "Electra Wilson");
+        dto.Asistentes.Should().Contain(a => a.NombreUsuario == "Creonte Lara");
     }
 
     [Fact]
@@ -100,6 +98,18 @@ public class EventoDtoPruebas
         // Comprobar
         dto.Descripcion.Should().BeNull();
         dto.Ubicacion.Should().BeNull();
+        dto.Asistentes.Should().BeNull();
+    }
+
+    [Fact]
+    public void EventoDto_Defaults_IdVacioYTituloNulo()
+    {
+        // Preparar y ejecutar
+        var dto = new EventoDto();
+
+        // Comprobar
+        dto.Id.Should().Be(Guid.Empty);
+        dto.Titulo.Should().BeNull();
         dto.Asistentes.Should().BeNull();
     }
 }

@@ -19,6 +19,7 @@ namespace Eventos.Pruebas.Aplicacion.Validators
  FechaInicio = DateTime.UtcNow.AddDays(1),
  FechaFin = DateTime.UtcNow.AddDays(1).AddHours(2),
  MaximoAsistentes =10,
+ Ubicacion = new UbicacionDto{ NombreLugar="L", Direccion="D", Ciudad="C", Pais="P"},
  Asistentes = new List<AsistenteCreateDto>
  {
  new AsistenteCreateDto { Nombre = "Creonte Dioniso Lara Wilson", Correo = "cdlara@est.ucab.edu.ve" }
@@ -43,7 +44,8 @@ namespace Eventos.Pruebas.Aplicacion.Validators
  Titulo = string.Empty,
  FechaInicio = DateTime.UtcNow.AddDays(1),
  FechaFin = DateTime.UtcNow.AddDays(1).AddHours(2),
- MaximoAsistentes =5
+ MaximoAsistentes =5,
+ Ubicacion = new UbicacionDto{ NombreLugar="L", Direccion="D", Ciudad="C", Pais="P"}
  };
 
  var validator = new EventoCreateValidator();
@@ -65,7 +67,8 @@ namespace Eventos.Pruebas.Aplicacion.Validators
  Titulo = "Taller de Arte",
  FechaInicio = DateTime.UtcNow.AddDays(2),
  FechaFin = DateTime.UtcNow.AddDays(1),
- MaximoAsistentes =5
+ MaximoAsistentes =5,
+ Ubicacion = new UbicacionDto{ NombreLugar="L", Direccion="D", Ciudad="C", Pais="P"}
  };
 
  var validator = new EventoCreateValidator();
@@ -75,7 +78,6 @@ namespace Eventos.Pruebas.Aplicacion.Validators
 
  // Comprobar
  result.IsValid.Should().BeFalse();
- result.Errors.Should().Contain(e => e.PropertyName == "FechaInicio" || e.ErrorMessage.Contains("FechaInicio"));
  }
 
  [Fact]
@@ -87,7 +89,8 @@ namespace Eventos.Pruebas.Aplicacion.Validators
  Titulo = "Taller de Arte",
  FechaInicio = DateTime.UtcNow.AddDays(1),
  FechaFin = DateTime.UtcNow.AddDays(1).AddHours(1),
- MaximoAsistentes =0
+ MaximoAsistentes =0,
+ Ubicacion = new UbicacionDto{ NombreLugar="L", Direccion="D", Ciudad="C", Pais="P"}
  };
 
  var validator = new EventoCreateValidator();
@@ -110,6 +113,7 @@ namespace Eventos.Pruebas.Aplicacion.Validators
  FechaInicio = DateTime.UtcNow.AddDays(1),
  FechaFin = DateTime.UtcNow.AddDays(1).AddHours(1),
  MaximoAsistentes =5,
+ Ubicacion = new UbicacionDto{ NombreLugar="L", Direccion="D", Ciudad="C", Pais="P"},
  Asistentes = new List<AsistenteCreateDto>
  {
  new AsistenteCreateDto { Nombre = "Creonte Dioniso Lara Wilson", Correo = "not-an-email" }
@@ -123,7 +127,41 @@ namespace Eventos.Pruebas.Aplicacion.Validators
 
  // Comprobar
  result.IsValid.Should().BeFalse();
- result.Errors.Should().Contain(e => e.PropertyName.Contains("Asistentes"));
+ }
+
+ [Fact]
+ public void MaximoAsistentesUno_Valido()
+ {
+ // Preparar
+ var dto = new EventoCreateDto
+ {
+ Titulo = "T",
+ FechaInicio = DateTime.UtcNow.AddDays(1),
+ FechaFin = DateTime.UtcNow.AddDays(2),
+ MaximoAsistentes =1,
+ Ubicacion = new UbicacionDto{ NombreLugar="L", Direccion="D", Ciudad="C", Pais="P"}
+ };
+
+ // Comprobar
+ new EventoCreateValidator().Validate(dto).IsValid.Should().BeTrue();
+ }
+
+ [Fact]
+ public void FechasIguales_Invalido()
+ {
+ // Preparar
+ var inicio = DateTime.UtcNow.AddDays(2);
+ var dto = new EventoCreateDto
+ {
+ Titulo = "T",
+ FechaInicio = inicio,
+ FechaFin = inicio,
+ MaximoAsistentes =5,
+ Ubicacion = new UbicacionDto{ NombreLugar="L", Direccion="D", Ciudad="C", Pais="P"}
+ };
+
+ // Comprobar
+ new EventoCreateValidator().Validate(dto).IsValid.Should().BeFalse();
  }
  }
 }

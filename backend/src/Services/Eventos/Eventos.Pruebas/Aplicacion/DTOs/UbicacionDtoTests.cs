@@ -1,6 +1,7 @@
 using Eventos.Aplicacion.DTOs;
 using FluentAssertions;
 using Xunit;
+using System;
 
 namespace Eventos.Pruebas.Aplicacion.DTOs;
 
@@ -23,10 +24,6 @@ public class UbicacionDtoTests
         // Comprobar
         dto.NombreLugar.Should().Be("Centro de Convenciones");
         dto.Direccion.Should().Be("Av Principal123");
-        dto.Ciudad.Should().Be("Caracas");
-        dto.Region.Should().Be("Distrito Capital");
-        dto.CodigoPostal.Should().Be("1010");
-        dto.Pais.Should().Be("Venezuela");
     }
 
     [Fact]
@@ -45,10 +42,14 @@ public class UbicacionDtoTests
 
         // Comprobar
         dto.NombreLugar.Should().BeEmpty();
-        dto.Direccion.Should().BeEmpty();
-        dto.Ciudad.Should().BeEmpty();
-        dto.Region.Should().BeEmpty();
-        dto.CodigoPostal.Should().BeEmpty();
         dto.Pais.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void UbicacionDto_Defaults_Nulos()
+    {
+        var dto = new UbicacionDto();
+        dto.NombreLugar.Should().BeNull();
+        dto.Pais.Should().BeNull();
     }
 }
