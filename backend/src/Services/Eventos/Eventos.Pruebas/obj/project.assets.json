@@ -37,6 +37,13 @@
           "build/netstandard1.0/coverlet.collector.targets": {}
         }
       },
+      "coverlet.msbuild/6.0.4": {
+        "type": "package",
+        "build": {
+          "build/coverlet.msbuild.props": {},
+          "build/coverlet.msbuild.targets": {}
+        }
+      },
       "FluentAssertions/6.12.0": {
         "type": "package",
         "dependencies": {
@@ -2342,6 +2349,47 @@
         "coverlet-icon.png",
         "coverlet.collector.6.0.0.nupkg.sha512",
         "coverlet.collector.nuspec"
+      ]
+    },
+    "coverlet.msbuild/6.0.4": {
+      "sha512": "Qa7Hg+wrOMDKpXVn2dw4Wlun490bIWsFW0fdNJQFJLZnbU27MCP0HJ2mPgS+3EQBQUb0zKlkwiQzP+j38Hc3Iw==",
+      "type": "package",
+      "path": "coverlet.msbuild/6.0.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "MSBuildIntegration.md",
+        "build/coverlet.msbuild.props",
+        "build/coverlet.msbuild.targets",
+        "coverlet-icon.png",
+        "coverlet.msbuild.6.0.4.nupkg.sha512",
+        "coverlet.msbuild.nuspec",
+        "tasks/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll",
+        "tasks/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "tasks/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll",
+        "tasks/netstandard2.0/Microsoft.Extensions.DependencyModel.dll",
+        "tasks/netstandard2.0/Microsoft.Extensions.FileSystemGlobbing.dll",
+        "tasks/netstandard2.0/Mono.Cecil.Mdb.dll",
+        "tasks/netstandard2.0/Mono.Cecil.Pdb.dll",
+        "tasks/netstandard2.0/Mono.Cecil.Rocks.dll",
+        "tasks/netstandard2.0/Mono.Cecil.dll",
+        "tasks/netstandard2.0/Newtonsoft.Json.dll",
+        "tasks/netstandard2.0/NuGet.Versioning.dll",
+        "tasks/netstandard2.0/System.Buffers.dll",
+        "tasks/netstandard2.0/System.Collections.Immutable.dll",
+        "tasks/netstandard2.0/System.Memory.dll",
+        "tasks/netstandard2.0/System.Numerics.Vectors.dll",
+        "tasks/netstandard2.0/System.Reflection.Metadata.dll",
+        "tasks/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll",
+        "tasks/netstandard2.0/System.Text.Encodings.Web.dll",
+        "tasks/netstandard2.0/System.Text.Json.dll",
+        "tasks/netstandard2.0/System.Threading.Tasks.Extensions.dll",
+        "tasks/netstandard2.0/coverlet.core.dll",
+        "tasks/netstandard2.0/coverlet.core.pdb",
+        "tasks/netstandard2.0/coverlet.core.xml",
+        "tasks/netstandard2.0/coverlet.msbuild.tasks.deps.json",
+        "tasks/netstandard2.0/coverlet.msbuild.tasks.dll",
+        "tasks/netstandard2.0/coverlet.msbuild.tasks.pdb"
       ]
     },
     "FluentAssertions/6.12.0": {
@@ -6774,69 +6822,60 @@
       "Eventos.Infraestructura >= 1.0.0",
       "FluentAssertions >= 6.12.0",
       "Microsoft.EntityFrameworkCore.InMemory >= 8.0.0",
+      "Microsoft.Extensions.Configuration.Abstractions >= 8.0.0",
       "Microsoft.NET.Test.Sdk >= 17.8.0",
       "Moq >= 4.20.70",
       "coverlet.collector >= 6.0.0",
+      "coverlet.msbuild >= 6.0.4",
       "xunit >= 2.6.2",
       "xunit.runner.visualstudio >= 2.5.4"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sofia\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/home/sofia/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sofia\\Source\\Repos\\ProyectoDesarrollo\\backend\\src\\Services\\Eventos\\Eventos.Pruebas\\Eventos.Pruebas.csproj",
+      "projectUniqueName": "/mnt/c/Users/sofia/Source/Repos/ProyectoDesarrollo/backend/src/Services/Eventos/Eventos.Pruebas/Eventos.Pruebas.csproj",
       "projectName": "Eventos.Pruebas",
-      "projectPath": "C:\\Users\\sofia\\Source\\Repos\\ProyectoDesarrollo\\backend\\src\\Services\\Eventos\\Eventos.Pruebas\\Eventos.Pruebas.csproj",
-      "packagesPath": "C:\\Users\\sofia\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sofia\\Source\\Repos\\ProyectoDesarrollo\\backend\\src\\Services\\Eventos\\Eventos.Pruebas\\obj\\",
+      "projectPath": "/mnt/c/Users/sofia/Source/Repos/ProyectoDesarrollo/backend/src/Services/Eventos/Eventos.Pruebas/Eventos.Pruebas.csproj",
+      "packagesPath": "/home/sofia/.nuget/packages/",
+      "outputPath": "/mnt/c/Users/sofia/Source/Repos/ProyectoDesarrollo/backend/src/Services/Eventos/Eventos.Pruebas/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\sofia\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/home/sofia/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\sofia\\Source\\Repos\\ProyectoDesarrollo\\backend\\src\\Services\\Eventos\\Eventos.Aplicacion\\Eventos.Aplicacion.csproj": {
-              "projectPath": "C:\\Users\\sofia\\Source\\Repos\\ProyectoDesarrollo\\backend\\src\\Services\\Eventos\\Eventos.Aplicacion\\Eventos.Aplicacion.csproj"
+            "/mnt/c/Users/sofia/Source/Repos/ProyectoDesarrollo/backend/src/Services/Eventos/Eventos.Aplicacion/Eventos.Aplicacion.csproj": {
+              "projectPath": "/mnt/c/Users/sofia/Source/Repos/ProyectoDesarrollo/backend/src/Services/Eventos/Eventos.Aplicacion/Eventos.Aplicacion.csproj"
             },
-            "C:\\Users\\sofia\\Source\\Repos\\ProyectoDesarrollo\\backend\\src\\Services\\Eventos\\Eventos.Dominio\\Eventos.Dominio.csproj": {
-              "projectPath": "C:\\Users\\sofia\\Source\\Repos\\ProyectoDesarrollo\\backend\\src\\Services\\Eventos\\Eventos.Dominio\\Eventos.Dominio.csproj"
+            "/mnt/c/Users/sofia/Source/Repos/ProyectoDesarrollo/backend/src/Services/Eventos/Eventos.Dominio/Eventos.Dominio.csproj": {
+              "projectPath": "/mnt/c/Users/sofia/Source/Repos/ProyectoDesarrollo/backend/src/Services/Eventos/Eventos.Dominio/Eventos.Dominio.csproj"
             },
-            "C:\\Users\\sofia\\Source\\Repos\\ProyectoDesarrollo\\backend\\src\\Services\\Eventos\\Eventos.Infraestructura\\Eventos.Infraestructura.csproj": {
-              "projectPath": "C:\\Users\\sofia\\Source\\Repos\\ProyectoDesarrollo\\backend\\src\\Services\\Eventos\\Eventos.Infraestructura\\Eventos.Infraestructura.csproj"
+            "/mnt/c/Users/sofia/Source/Repos/ProyectoDesarrollo/backend/src/Services/Eventos/Eventos.Infraestructura/Eventos.Infraestructura.csproj": {
+              "projectPath": "/mnt/c/Users/sofia/Source/Repos/ProyectoDesarrollo/backend/src/Services/Eventos/Eventos.Infraestructura/Eventos.Infraestructura.csproj"
             }
           }
         }
       },
       "warningProperties": {
+        "noWarn": [
+          "NU1900"
+        ],
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.300"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -6854,6 +6893,10 @@
             "target": "Package",
             "version": "[8.0.0, )"
           },
+          "Microsoft.Extensions.Configuration.Abstractions": {
+            "target": "Package",
+            "version": "[8.0.0, )"
+          },
           "Microsoft.NET.Test.Sdk": {
             "target": "Package",
             "version": "[17.8.0, )"
@@ -6865,6 +6908,12 @@
           "coverlet.collector": {
             "target": "Package",
             "version": "[6.0.0, )"
+          },
+          "coverlet.msbuild": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[6.0.4, )"
           },
           "xunit": {
             "target": "Package",
@@ -6891,7 +6940,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/home/sofia/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

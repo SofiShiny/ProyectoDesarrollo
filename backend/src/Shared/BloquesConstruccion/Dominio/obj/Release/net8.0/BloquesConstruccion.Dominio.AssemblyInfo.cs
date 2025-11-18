@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BloquesConstruccion.Dominio")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d366ffe6209e050b34f03c56e530e40414c99760")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d50e52eb1d0d812ca6d041b19af41bdcd0a11739")]
 [assembly: System.Reflection.AssemblyProductAttribute("BloquesConstruccion.Dominio")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BloquesConstruccion.Dominio")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

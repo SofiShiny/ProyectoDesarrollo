@@ -14,9 +14,11 @@
           "Eventos.Infraestructura": "1.0.0",
           "FluentAssertions": "6.12.0",
           "Microsoft.EntityFrameworkCore.InMemory": "8.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
           "Microsoft.NET.Test.Sdk": "17.8.0",
           "Moq": "4.20.70",
           "coverlet.collector": "6.0.0",
+          "coverlet.msbuild": "6.0.4",
           "xunit": "2.6.2",
           "xunit.runner.visualstudio": "2.5.4"
         },
@@ -44,6 +46,7 @@
         }
       },
       "coverlet.collector/6.0.0": {},
+      "coverlet.msbuild/6.0.4": {},
       "FluentAssertions/6.12.0": {
         "dependencies": {
           "System.Configuration.ConfigurationManager": "4.4.0"
@@ -742,7 +745,7 @@
             "rid": "win",
             "assetType": "runtime",
             "assemblyVersion": "6.0.0.0",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "6.0.21.52210"
           },
           "runtimes/win/lib/net6.0/System.Diagnostics.EventLog.dll": {
             "rid": "win",
@@ -1281,7 +1284,7 @@
         "runtime": {
           "lib/netstandard2.0/xunit.abstractions.dll": {
             "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.0.0.0"
+            "fileVersion": "0.0.0.0"
           }
         }
       },
@@ -1332,10 +1335,7 @@
           "MediatR": "12.2.0"
         },
         "runtime": {
-          "BloquesConstruccion.Aplicacion.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "BloquesConstruccion.Aplicacion.dll": {}
         }
       },
       "BloquesConstruccion.Dominio/1.0.0": {
@@ -1343,10 +1343,7 @@
           "MediatR": "12.2.0"
         },
         "runtime": {
-          "BloquesConstruccion.Dominio.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "BloquesConstruccion.Dominio.dll": {}
         }
       },
       "Eventos.Aplicacion/1.0.0": {
@@ -1358,10 +1355,7 @@
           "MediatR": "12.2.0"
         },
         "runtime": {
-          "Eventos.Aplicacion.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Eventos.Aplicacion.dll": {}
         }
       },
       "Eventos.Dominio/1.0.0": {
@@ -1369,10 +1363,7 @@
           "BloquesConstruccion.Dominio": "1.0.0"
         },
         "runtime": {
-          "Eventos.Dominio.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Eventos.Dominio.dll": {}
         }
       },
       "Eventos.Infraestructura/1.0.0": {
@@ -1386,10 +1377,7 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.0"
         },
         "runtime": {
-          "Eventos.Infraestructura.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Eventos.Infraestructura.dll": {}
         }
       }
     }
@@ -1420,6 +1408,13 @@
       "sha512": "sha512-tW3lsNS+dAEII6YGUX/VMoJjBS1QvsxqJeqLaJXub08y1FSjasFPtQ4UBUsudE9PNrzLjooClMsPtY2cZLdXpQ==",
       "path": "coverlet.collector/6.0.0",
       "hashPath": "coverlet.collector.6.0.0.nupkg.sha512"
+    },
+    "coverlet.msbuild/6.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Qa7Hg+wrOMDKpXVn2dw4Wlun490bIWsFW0fdNJQFJLZnbU27MCP0HJ2mPgS+3EQBQUb0zKlkwiQzP+j38Hc3Iw==",
+      "path": "coverlet.msbuild/6.0.4",
+      "hashPath": "coverlet.msbuild.6.0.4.nupkg.sha512"
     },
     "FluentAssertions/6.12.0": {
       "type": "package",
